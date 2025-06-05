@@ -1,0 +1,76 @@
+.outerJourneyCard {
+  padding: 40px 40px;
+  max-width: 1400px;
+  margin: auto;
+}
+.innerJourneyCard{
+  padding: 40px;
+}
+.carousel {
+  overflow: hidden;
+}
+
+.inner {
+  white-space: nowrap;
+  transition: transform 0.3s;
+}
+
+.carousel-item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  background-color: green;
+  color: #fff;
+}
+
+.navigation-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-top: 16px;
+}
+
+.prev-btn,
+.next-btn {
+  /*background-color: #8F0E0E;*/
+  border: none;
+  color: #8F0E0E;
+  padding: 4px 8px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 30px;
+}
+
+/*.prev-btn:hover,
+.next-btn:hover {
+  background-color: #8F0E0E;
+}*/
+
+.dots-container {
+  display: flex;
+  gap: 10px;
+}
+
+.dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #ccc;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+}
+
+.active-dot {
+  background-color: #8F0E0E;
+}
+
+.dot-progress {
+  background-color: #FFCDD2;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
