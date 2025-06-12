@@ -320,3 +320,31 @@ class CourseBundle(models.Model):
 
     def __str__(self):
         return f"Bundle {self.order} for {self.course.title}"
+    
+
+class Module(models.Model):
+    course = models.ForeignKey('Course', on_delete=models.CASCADE, related_name='modules')
+    title = models.CharField(max_length=200)
+    order = models.PositiveIntegerField()
+
+    class Meta:
+        ordering = ['order']
+
+    def __str__(self):
+        return f"{self.course.title} - Module {self.order}: {self.title}"
+
+class CourseBundle(models.Model):
+    module = models.ForeignKey('Module', on_delete=models.CASCADE, related_name='bundles')
+    content_type = models.CharField(max_length=50, choices=(
+        ('video', 'Video'),
+        ('study_material', 'Study Material'),
+        ('assignment', 'Assignment'),
+    ))
+    content_id = models.IntegerField()
+    description = models.TextField(blank=True)
+
+class StudentModuleProgress(models.Model):
+    student = models.ForeignKey('User', on_delete=models.CASCADE)
+    module = models.ForeignKey('Module', on_delete=models.CASCADE)
+    is_unlocked = models.BooleanField(default=False)
+    completed = models.BooleanField(default=False)

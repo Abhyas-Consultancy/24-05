@@ -89,7 +89,7 @@
 # 4.Fourth
 
 from rest_framework import serializers
-from .models import RecordedClass, StudyMaterial, MockAssignment, Submission, User, Course, StudentCourse, CourseBundle
+from .models import RecordedClass, StudyMaterial, MockAssignment, Submission, User, Course, StudentCourse, CourseBundle, Module
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -164,3 +164,11 @@ class CourseBundleSerializer(serializers.ModelSerializer):
         elif obj.content_type == 'assignment':
             return MockAssignmentSerializer(MockAssignment.objects.get(id=obj.content_id)).data
         return None
+
+class ModuleSerializer(serializers.ModelSerializer):
+    bundles = CourseBundleSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Module
+        fields = ['id', 'title', 'order', 'bundles']
+

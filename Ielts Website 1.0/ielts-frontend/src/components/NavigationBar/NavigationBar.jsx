@@ -102,7 +102,7 @@ function NavigationBar({ isLoggedIn, role }) {
   }, []);
 
   const dashboardPath = role === "teacher" ? "/teacher-dashboard" : role === "student" ? "/student-dashboard" : null;
-  const dashboardLabel = role === "teacher" ? "Teacher Dashboard" : role === "student" ? "Student Dashboard" : "";
+  const dashboardLabel = role === "teacher" ? "Teacher Dashboard" : role === "student" ? "Student Board" : "";
 
   return (
     <>

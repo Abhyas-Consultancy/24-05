@@ -142,14 +142,13 @@
 
 import os
 from pathlib import Path
-
 # Build paths inside the project
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Security settings
 SECRET_KEY = '3k#j9z(pz-1!v5q$x7m@r2o^u8n%w4l)y0t+h6e*b5d&f'
 DEBUG = True
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 INSTALLED_APPS = [
