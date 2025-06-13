@@ -4,12 +4,12 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate, get_user_model
-from .models import RecordedClass, StudyMaterial, MockAssignment, Submission, Course, StudentCourse, CourseBundle, Module, StudentModuleProgress
+from .models import RecordedClass, StudyMaterial, MockAssignment, Submission, Course, StudentCourse, ModuleBundle, Module, StudentModuleProgress
 from .serializers import (
     UserSerializer, CourseSerializer, RecordedClassSerializer,
     StudyMaterialSerializer, MockAssignmentSerializer,
     SubmissionSerializer, StudentCourseSerializer,
-    CourseBundleSerializer, ModuleSerializer
+    CourseBundleSerializer, ModuleSerializer,ModuleBundleSerializer
 )
 from rest_framework.permissions import IsAuthenticated
 User = get_user_model()
@@ -262,7 +262,7 @@ class StudentCourseListView(APIView):
 #     permission_classes = [IsAuthenticated, IsStudent]
 
 #     def get(self, request, course_id):
-#         bundles = CourseBundle.objects.filter(module__course_id=course_id)
+#         bundles = ModuleBundle.objects.filter(module__course_id=course_id)
 #         serializer = CourseBundleSerializer(bundles, many=True)
 #         return Response(serializer.data)
 class CourseRoadmapView(APIView):
@@ -300,7 +300,7 @@ class CourseBundleListCreateView(APIView):
     permission_classes = [IsAuthenticated, IsTeacher | IsAdmin]
 
     def get(self, request, course_id):
-        bundles = CourseBundle.objects.filter(module__course_id=course_id)
+        bundles = ModuleBundle.objects.filter(module__course_id=course_id)
         serializer = CourseBundleSerializer(bundles, many=True)
         return Response(serializer.data)
 
@@ -319,8 +319,8 @@ class CourseBundleDetailView(APIView):
 
     def put(self, request, bundle_id):
         try:
-            bundle = CourseBundle.objects.get(id=bundle_id)
-        except CourseBundle.DoesNotExist:
+            bundle = ModuleBundle.objects.get(id=bundle_id)
+        except ModuleBundle.DoesNotExist:
             return Response({'error': 'Bundle not found'}, status=status.HTTP_404_NOT_FOUND)
 
         serializer = CourseBundleSerializer(bundle, data=request.data, partial=True)
@@ -331,8 +331,8 @@ class CourseBundleDetailView(APIView):
 
     def delete(self, request, bundle_id):
         try:
-            bundle = CourseBundle.objects.get(id=bundle_id)
-        except CourseBundle.DoesNotExist:
+            bundle = ModuleBundle.objects.get(id=bundle_id)
+        except ModuleBundle.DoesNotExist:
             return Response({'error': 'Bundle not found'}, status=status.HTTP_404_NOT_FOUND)
 
         bundle.delete()
@@ -351,9 +351,71 @@ class CourseBundleDetailView(APIView):
 #         course = Course.objects.get(id=course_id)
 #         serializer.save(course=course)
 
+# class ModuleListCreateAPIView(generics.ListCreateAPIView):
+#     serializer_class = ModuleSerializer
+#     permission_classes = [IsAuthenticated]
+
+#     def get_queryset(self):
+#         course_id = self.kwargs['course_id']
+#         return Module.objects.filter(course_id=course_id).order_by('order')
+
+#     def perform_create(self, serializer):
+#         course_id = self.kwargs['course_id']
+#         course = Course.objects.get(id=course_id)
+#         serializer.save(course=course)
+
+# class ModuleRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+#     queryset = Module.objects.all()
+#     serializer_class = ModuleSerializer
+#     permission_classes = [permissions.IsAuthenticated, IsTeacher | IsAdmin]
+# class UnlockNextModuleView(APIView):
+#     def post(self, request):
+#         user = request.user
+#         submission = Submission.objects.get(id=request.data['submission_id'])
+#         module = submission.mock_assignment.course.modules.get(bundles__content_id=submission.mock_assignment.id)
+
+#         progress, created = StudentModuleProgress.objects.get_or_create(student=user, module=module)
+#         progress.completed = True
+#         progress.save()
+
+#         next_module = Module.objects.filter(course=module.course, order=module.order + 1).first()
+#         if next_module:
+#             StudentModuleProgress.objects.get_or_create(student=user, module=next_module, defaults={'is_unlocked': True})
+
+#         return Response({'status': 'next module unlocked'})
+# from django.shortcuts import get_object_or_404
+
+
+
+# class BundleListCreateAPIView(generics.ListCreateAPIView):
+#     serializer_class = CourseBundleSerializer
+#     permission_classes = [permissions.IsAuthenticated, IsTeacher | IsAdmin]
+
+#     def get_queryset(self):
+#         module_id = self.kwargs['module_id']
+#         return ModuleBundle.objects.filter(module_id=module_id)
+
+#     # def perform_create(self, serializer):
+#     #     module_id = self.kwargs['module_id']
+#     #     # module = Module.objects.get(id=module_id)
+#     #     module = get_object_or_404(Module, id=module_id)
+#     #     serializer.save(module=module, course=module.course)
+#     def perform_create(self, serializer):
+#         module_id = self.kwargs['module_id']
+#         module = get_object_or_404(Module, id=module_id)
+#         course = module.course  # Get course from module
+#         serializer.save(module=module, course=course)
+
+
+# class BundleRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+#     queryset = ModuleBundle.objects.all()
+#     serializer_class = CourseBundleSerializer
+#     permission_classes = [permissions.IsAuthenticated, IsTeacher | IsAdmin]
+
+from django.shortcuts import get_object_or_404
 class ModuleListCreateAPIView(generics.ListCreateAPIView):
     serializer_class = ModuleSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         course_id = self.kwargs['course_id']
@@ -361,19 +423,41 @@ class ModuleListCreateAPIView(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         course_id = self.kwargs['course_id']
-        course = Course.objects.get(id=course_id)
+        course = get_object_or_404(Course, id=course_id)
         serializer.save(course=course)
+
 
 class ModuleRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Module.objects.all()
     serializer_class = ModuleSerializer
-    permission_classes = [permissions.IsAuthenticated, IsTeacher | IsAdmin]
+    permission_classes = [permissions.IsAuthenticated]
+
+
+class BundleListCreateAPIView(generics.ListCreateAPIView):
+    serializer_class = ModuleBundleSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        module_id = self.kwargs['module_id']
+        return ModuleBundle.objects.filter(module_id=module_id)
+
+    def perform_create(self, serializer):
+        module_id = self.kwargs['module_id']
+        module = get_object_or_404(Module, id=module_id)
+        serializer.save(module=module, course=module.course)
+
+
+class BundleRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ModuleBundle.objects.all()
+    serializer_class = ModuleBundleSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
 class UnlockNextModuleView(APIView):
     def post(self, request):
         user = request.user
         submission = Submission.objects.get(id=request.data['submission_id'])
         module = submission.mock_assignment.course.modules.get(bundles__content_id=submission.mock_assignment.id)
-
         progress, created = StudentModuleProgress.objects.get_or_create(student=user, module=module)
         progress.completed = True
         progress.save()
@@ -383,22 +467,3 @@ class UnlockNextModuleView(APIView):
             StudentModuleProgress.objects.get_or_create(student=user, module=next_module, defaults={'is_unlocked': True})
 
         return Response({'status': 'next module unlocked'})
-
-class BundleListCreateAPIView(generics.ListCreateAPIView):
-    serializer_class = CourseBundleSerializer
-    permission_classes = [permissions.IsAuthenticated, IsTeacher | IsAdmin]
-
-    def get_queryset(self):
-        module_id = self.kwargs['module_id']
-        return CourseBundle.objects.filter(module_id=module_id)
-
-    def perform_create(self, serializer):
-        module_id = self.kwargs['module_id']
-        module = Module.objects.get(id=module_id)
-        serializer.save(module=module)
-
-
-class BundleRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = CourseBundle.objects.all()
-    serializer_class = CourseBundleSerializer
-    permission_classes = [permissions.IsAuthenticated, IsTeacher | IsAdmin]

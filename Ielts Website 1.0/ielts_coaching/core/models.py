@@ -304,22 +304,22 @@ class StudentCourse(models.Model):
     def __str__(self):
         return f"{self.student.username} enrolled in {self.course.title}"
 
-class CourseBundle(models.Model):
-    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='bundles')
-    module = models.ForeignKey('Module', on_delete=models.CASCADE, related_name='bundles')
-    content_type = models.CharField(max_length=50, choices=(
-        ('video', 'Video'),
-        ('study_material', 'Study Material'),
-        ('assignment', 'Assignment'),
-    ))
-    content_id = models.IntegerField()  # ID of the video, study material, or assignment
-    description = models.TextField(blank=True)
-    
-    class Meta:
-        ordering = ['module_id']
+# class CourseBundle(models.Model):
+#     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='bundles')
+#     module = models.ForeignKey('Module', on_delete=models.CASCADE, related_name='bundles')
+#     content_type = models.CharField(max_length=50, choices=(
+#         ('video', 'Video'),
+#         ('study_material', 'Study Material'),
+#         ('assignment', 'Assignment'),
+#     ))
+#     content_id = models.IntegerField()  # ID of the video, study material, or assignment
+#     description = models.TextField(blank=True)
+#     sequence = models.PositiveIntegerField(default=1)  # <-- New field
+#     class Meta:
+#         ordering = ['module_id']
 
-    def __str__(self):
-        return f"Bundle {self.module.module_id} for {self.course.title}"  
+#     def __str__(self):
+#         return f"Bundle {self.module.module_id} for {self.course.title}"  
 
 class Module(models.Model):
     course = models.ForeignKey('Course', on_delete=models.CASCADE, related_name='modules')
@@ -332,6 +332,26 @@ class Module(models.Model):
         return f"{self.title} (Order: {self.order})"
     # def __str__(self):
     #     return f"{self.course.title} - Module {self.order}: {self.title}"
+
+
+class ModuleBundle(models.Model):   # Renamed CourseBundle → ModuleBundle
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='bundles')
+    module = models.ForeignKey(Module, on_delete=models.CASCADE, related_name='bundles')
+    content_type = models.CharField(max_length=50, choices=(
+        ('video', 'Video'),
+        ('study_material', 'Study Material'),
+        ('assignment', 'Assignment'),
+    ))
+    content_id = models.IntegerField()
+    description = models.TextField(blank=True)
+    sequence = models.PositiveIntegerField(default=1)
+
+    class Meta:
+        ordering = ['module_id', 'sequence']
+
+    def __str__(self):
+        return f"Bundle {self.module.id} for {self.course.title}"
+
 
 # class CourseBundle(models.Model):
 #     module = models.ForeignKey('Module', on_delete=models.CASCADE, related_name='bundles')
