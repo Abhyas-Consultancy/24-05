@@ -9,7 +9,7 @@ function AdminDashboard() {
   const [courses, setCourses] = useState([]);
   const [selectedUser, setSelectedUser] = useState("");
   const [selectedCourse, setSelectedCourse] = useState("");
-
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
   // Load data on mount
   useEffect(() => {
     fetchAllData();
