@@ -277,16 +277,16 @@ function StudentDashboard() {
     }
 
     const config = { headers: { Authorization: `Token ${token}` } };
-    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+    // const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
     const fetchData = async () => {
       try {
         const [recordedClassesResponse, studyMaterialsResponse, mockAssignmentsResponse, coursesResponse, submissionsResponse] = await Promise.all([
-          axios.get(`${API_BASE_URL}/api/recorded-classes/`, config),
-          axios.get(`${API_BASE_URL}/api/study-materials/`, config),
-          axios.get(`${API_BASE_URL}/api/student-mock-assignments/`, config),
-          axios.get(`${API_BASE_URL}/api/student-courses/`, config),
-          axios.get(`${API_BASE_URL}/api/submissions/`, config),
+          axios.get(`/api/recorded-classes/`, config),
+          axios.get(`/api/study-materials/`, config),
+          axios.get(`/api/student-mock-assignments/`, config),
+          axios.get(`/api/student-courses/`, config),
+          axios.get(`/api/submissions/`, config),
         ]);
         console.log("Courses response:", coursesResponse.data);
         setRecordedClasses(Array.isArray(recordedClassesResponse.data) ? recordedClassesResponse.data : []);
@@ -328,8 +328,8 @@ function StudentDashboard() {
 
     try {
       const token = localStorage.getItem("token");
-      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-      const response = await axios.post(`${API_BASE_URL}/api/submissions/`, formData, {
+      // const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+      const response = await axios.post(`/api/submissions/`, formData, {
         headers: {
           Authorization: `Token ${token}`,
           "Content-Type": "multipart/form-data",

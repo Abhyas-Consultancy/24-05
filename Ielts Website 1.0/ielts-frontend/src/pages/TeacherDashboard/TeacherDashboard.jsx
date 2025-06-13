@@ -1475,6 +1475,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import TextContainer from "../../components/TextContainer";
+import logger from "../../utils/logger";
 
 function TeacherDashboard() {
   const [recordedClasses, setRecordedClasses] = useState([]);
@@ -1509,22 +1510,22 @@ function TeacherDashboard() {
     const config = { headers: { Authorization: `Token ${token}` } };
 
     axios
-      .get("http://127.0.0.1:8000/api/recorded-classes/", config)
+      .get("/api/recorded-classes/", config)
       .then((response) => setRecordedClasses(response.data))
       .catch((error) => console.error("Error fetching recorded classes:", error));
 
     axios
-      .get("http://127.0.0.1:8000/api/study-materials/", config)
+      .get("/api/study-materials/", config)
       .then((response) => setStudyMaterials(response.data))
       .catch((error) => console.error("Error fetching study materials:", error));
 
     axios
-      .get("http://127.0.0.1:8000/api/mock-assignments/", config)
+      .get("/api/mock-assignments/", config)
       .then((response) => setMockAssignments(response.data))
       .catch((error) => console.error("Error fetching mock assignments:", error));
 
     axios
-      .get("http://127.0.0.1:8000/api/courses/", config)
+      .get("/api/courses/", config)
       .then((response) => setCourses(response.data))
       .catch((error) => console.error("Error fetching courses:", error));
   }, []);
@@ -1556,7 +1557,7 @@ function TeacherDashboard() {
 
     try {
       const token = localStorage.getItem("token");
-      await axios.post(`http://127.0.0.1:8000/api/${endpoint}/`, formData, {
+      await axios.post(`/api/${endpoint}/`, formData, {
         headers: {
           Authorization: `Token ${token}`,
           "Content-Type": "multipart/form-data",
@@ -1571,15 +1572,15 @@ function TeacherDashboard() {
 
       const config = { headers: { Authorization: `Token ${token}` } };
       if (endpoint === "recorded-classes") {
-        const res = await axios.get(`http://127.0.0.1:8000/api/recorded-classes/`, config);
+        const res = await axios.get(`/api/recorded-classes/`, config);
         setRecordedClasses(res.data);
       }
       if (endpoint === "study-materials") {
-        const res = await axios.get(`http://127.0.0.1:8000/api/study-materials/`, config);
+        const res = await axios.get(`/api/study-materials/`, config);
         setStudyMaterials(res.data);
       }
       if (endpoint === "mock-assignments") {
-        const res = await axios.get(`http://127.0.0.1:8000/api/mock-assignments/`, config);
+        const res = await axios.get(`/api/mock-assignments/`, config);
         setMockAssignments(res.data);
       }
     } catch (error) {
@@ -1593,7 +1594,7 @@ function TeacherDashboard() {
 
     try {
       const token = localStorage.getItem("token");
-      await axios.post("http://127.0.0.1:8000/api/create-course-bundle/", courseBundle, {
+      await axios.post("/api/create-course-bundle/", courseBundle, {
         headers: { Authorization: `Token ${token}` },
       });
 
@@ -1606,7 +1607,7 @@ function TeacherDashboard() {
       });
       alert("Course bundle created successfully!");
 
-      const res = await axios.get("http://127.0.0.1:8000/api/courses/", {
+      const res = await axios.get("/api/courses/", {
         headers: { Authorization: `Token ${token}` },
       });
       setCourses(res.data);

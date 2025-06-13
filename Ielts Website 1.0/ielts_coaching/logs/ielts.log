@@ -1,0 +1,59 @@
+[2025-06-12 23:25:21,379] INFO django.utils.autoreload Watching for file changes with StatReloader
+[2025-06-12 23:32:40,506] INFO django.utils.autoreload Watching for file changes with StatReloader
+[2025-06-12 23:34:36,881] INFO django.server "GET / HTTP/1.1" 200 74
+[2025-06-12 23:34:38,887] WARNING django.request Not Found: /favicon.ico
+[2025-06-12 23:34:38,888] WARNING django.server "GET /favicon.ico HTTP/1.1" 404 2627
+[2025-06-13 20:46:49,078] INFO django.utils.autoreload Watching for file changes with StatReloader
+[2025-06-13 20:49:06,487] INFO django.server "POST /api/login/ HTTP/1.1" 200 104
+[2025-06-13 20:49:06,899] INFO core User popli logged in with role student
+[2025-06-13 20:49:06,900] INFO django.server "POST /api/frontend-log/ HTTP/1.1" 200 19
+[2025-06-13 20:49:06,946] INFO django.server "GET /api/recorded-classes/ HTTP/1.1" 200 2
+[2025-06-13 20:49:07,002] INFO django.server "GET /api/study-materials/ HTTP/1.1" 200 2
+[2025-06-13 20:49:07,004] INFO django.server "GET /api/student-mock-assignments/ HTTP/1.1" 200 2
+[2025-06-13 20:49:07,021] INFO django.server "GET /api/student-courses/ HTTP/1.1" 200 2
+[2025-06-13 20:49:07,022] INFO django.server "GET /api/submissions/ HTTP/1.1" 200 2
+[2025-06-13 20:49:07,186] INFO django.server "GET /api/recorded-classes/ HTTP/1.1" 200 2
+[2025-06-13 20:49:07,247] INFO django.server "GET /api/study-materials/ HTTP/1.1" 200 2
+[2025-06-13 20:49:07,251] INFO django.server "GET /api/student-mock-assignments/ HTTP/1.1" 200 2
+[2025-06-13 20:49:07,257] INFO django.server "GET /api/submissions/ HTTP/1.1" 200 2
+[2025-06-13 20:49:07,277] INFO django.server "GET /api/student-courses/ HTTP/1.1" 200 2
+[2025-06-13 21:05:57,255] WARNING django.request Unauthorized: /api/login/
+[2025-06-13 21:05:57,257] WARNING django.server "POST /api/login/ HTTP/1.1" 401 31
+[2025-06-13 21:05:57,577] ERROR core Login error: AxiosError: Request failed with status code 401
+[2025-06-13 21:05:57,577] INFO django.server "POST /api/frontend-log/ HTTP/1.1" 200 19
+[2025-06-13 21:06:08,935] WARNING django.request Unauthorized: /api/login/
+[2025-06-13 21:06:08,935] WARNING django.server "POST /api/login/ HTTP/1.1" 401 31
+[2025-06-13 21:06:09,265] ERROR core Login error: AxiosError: Request failed with status code 401
+[2025-06-13 21:06:09,266] INFO django.server "POST /api/frontend-log/ HTTP/1.1" 200 19
+[2025-06-13 21:06:24,934] WARNING django.request Unauthorized: /api/login/
+[2025-06-13 21:06:24,934] WARNING django.server "POST /api/login/ HTTP/1.1" 401 31
+[2025-06-13 21:06:25,253] ERROR core Login error: AxiosError: Request failed with status code 401
+[2025-06-13 21:06:25,253] INFO django.server "POST /api/frontend-log/ HTTP/1.1" 200 19
+[2025-06-13 21:07:24,894] INFO django.server "POST /api/login/ HTTP/1.1" 200 104
+[2025-06-13 21:07:25,178] INFO core User popli logged in with role student
+[2025-06-13 21:07:25,179] INFO django.server "POST /api/frontend-log/ HTTP/1.1" 200 19
+[2025-06-13 21:07:25,222] INFO django.server "GET /api/student-courses/ HTTP/1.1" 200 2
+[2025-06-13 21:07:25,223] INFO django.server "GET /api/recorded-classes/ HTTP/1.1" 200 2
+[2025-06-13 21:07:25,226] INFO django.server "GET /api/study-materials/ HTTP/1.1" 200 2
+[2025-06-13 21:07:25,226] INFO django.server "GET /api/student-mock-assignments/ HTTP/1.1" 200 2
+[2025-06-13 21:07:25,227] INFO django.server "GET /api/submissions/ HTTP/1.1" 200 2
+[2025-06-13 21:07:25,490] INFO django.server "GET /api/student-courses/ HTTP/1.1" 200 2
+[2025-06-13 21:07:25,499] INFO django.server "GET /api/recorded-classes/ HTTP/1.1" 200 2
+[2025-06-13 21:07:25,501] INFO django.server "GET /api/study-materials/ HTTP/1.1" 200 2
+[2025-06-13 21:07:25,508] INFO django.server "GET /api/student-mock-assignments/ HTTP/1.1" 200 2
+[2025-06-13 21:07:25,514] INFO django.server "GET /api/submissions/ HTTP/1.1" 200 2
+[2025-06-13 21:07:52,894] INFO django.server "POST /api/login/ HTTP/1.1" 200 104
+[2025-06-13 21:07:53,275] INFO core User popli logged in with role student
+[2025-06-13 21:07:53,276] INFO django.server "POST /api/frontend-log/ HTTP/1.1" 200 19
+[2025-06-13 21:07:53,281] INFO django.server "GET /api/study-materials/ HTTP/1.1" 200 2
+[2025-06-13 21:07:53,287] INFO django.server "GET /api/student-mock-assignments/ HTTP/1.1" 200 2
+[2025-06-13 21:07:53,288] INFO django.server "GET /api/student-courses/ HTTP/1.1" 200 2
+[2025-06-13 21:07:53,524] INFO django.server "GET /api/recorded-classes/ HTTP/1.1" 200 2
+[2025-06-13 21:07:53,641] INFO django.server "GET /api/study-materials/ HTTP/1.1" 200 2
+[2025-06-13 21:07:53,641] INFO django.server "GET /api/student-courses/ HTTP/1.1" 200 2
+[2025-06-13 21:07:53,842] INFO django.server "GET /api/submissions/ HTTP/1.1" 200 2
+[2025-06-13 21:07:53,911] INFO django.server "GET /api/recorded-classes/ HTTP/1.1" 200 2
+[2025-06-13 21:07:54,122] INFO django.server "GET /api/student-mock-assignments/ HTTP/1.1" 200 2
+[2025-06-13 21:07:54,872] INFO django.server "GET /api/submissions/ HTTP/1.1" 200 2
+[2025-06-13 21:39:23,971] INFO django.utils.autoreload /project/sandbox/user-workspace/Ielts Website 1.0/ielts_coaching/ielts_coaching/settings.py changed, reloading.
+[2025-06-13 21:39:24,818] INFO django.utils.autoreload Watching for file changes with StatReloader

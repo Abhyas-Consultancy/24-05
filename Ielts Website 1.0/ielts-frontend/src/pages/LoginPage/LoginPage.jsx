@@ -183,29 +183,30 @@
 
 // 3.Third
 
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import TextContainer from "../../components/TextContainer";
+import logger from "../../utils/logger";
 
 function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false); // Add state to track submission
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (isSubmitting) return; // Prevent multiple submissions
+    if (isSubmitting) return;
     setIsSubmitting(true);
     setError("");
     try {
-      const response = await axios.post("http://127.0.0.1:8000/api/login/", {
+      const response = await axios.post("/api/login/", {
         username,
         password,
       });
-      console.log("Login response:", response.data);
       const role = response.data.user?.role;
       if (!['student', 'teacher', 'admin'].includes(role)) {
         setError("Invalid role received from server. Please contact support.");
@@ -215,18 +216,14 @@ function LoginPage() {
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("role", role);
       localStorage.setItem("username", response.data.user?.username);
-      console.log("localStorage after login:", {
-        token: localStorage.getItem("token"),
-        role: localStorage.getItem("role"),
-        username: localStorage.getItem("username"),
-      }); // Debug localStorage
+      logger.info(`User ${username} logged in with role ${role}`);
       const redirectPath = role === "admin" ? "/admin-dashboard" :
                           role === "teacher" ? "/teacher-dashboard" :
                           "/student-dashboard";
-      console.log("Redirecting to:", redirectPath);
-      navigate(redirectPath, { replace: true }); // Use replace to avoid history stack issues
-    } catch (error) {
-      setError(error.response?.data?.error || "Login failed. Please try again.");
+      navigate(redirectPath, { replace: true });
+    } catch (err) {
+      setError(err.response?.data?.error || "Login failed. Please try again.");
+      logger.error("Login error: " + err);
       setIsSubmitting(false);
     }
   };

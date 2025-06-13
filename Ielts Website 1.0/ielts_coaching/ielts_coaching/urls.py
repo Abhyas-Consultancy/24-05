@@ -21,6 +21,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.http import JsonResponse
 from django.views.static import serve
+from core.views_logging import FrontendLogView
 
 def home(request):
     return JsonResponse({"message": "Welcome to the IELTS Coaching API. Use /api/ for endpoints."})
@@ -30,6 +31,7 @@ urlpatterns = [
     path('favicon.ico', serve, {'document_root': settings.STATICFILES_DIRS[0], 'path': 'favicon.ico'}),
     path('admin/', admin.site.urls),
     path('api/', include('core.urls')),
+    path('api/frontend-log/', FrontendLogView.as_view(), name='frontend-log'),
 ]
 
 if settings.DEBUG:
