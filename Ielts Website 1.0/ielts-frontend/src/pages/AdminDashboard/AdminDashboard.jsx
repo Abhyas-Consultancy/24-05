@@ -23,11 +23,11 @@ function AdminDashboard() {
     }
     const config = { headers: { Authorization: `Token ${token}` } };
 
-    axios.get("http://127.0.0.1:8000/api/users/", config)
+    axios.get(`${API_BASE_URL}/api/users/`, config)
       .then((response) => setUsers(response.data))
       .catch((error) => console.error("Error fetching users:", error));
 
-    axios.get("http://127.0.0.1:8000/api/courses/", config)
+    axios.get(`${API_BASE_URL}/api/courses/`, config)
       .then((response) => setCourses(response.data))
       .catch((error) => console.error("Error fetching courses:", error));
   };
@@ -35,7 +35,7 @@ function AdminDashboard() {
   const deleteUser = (id) => {
     if (!window.confirm("Are you sure you want to delete this user?")) return;
     const token = localStorage.getItem("token");
-    axios.delete(`http://127.0.0.1:8000/api/users/${id}/`, {
+    axios.delete(`${API_BASE_URL}/api/users/${id}/`, {
       headers: { Authorization: `Token ${token}` }
     })
     .then(() => {
@@ -48,7 +48,7 @@ function AdminDashboard() {
   const deleteCourse = (id) => {
     if (!window.confirm("Are you sure you want to delete this course?")) return;
     const token = localStorage.getItem("token");
-    axios.delete(`http://127.0.0.1:8000/api/courses/${id}/`, {
+    axios.delete(`${API_BASE_URL}/api/courses/${id}/`, {
       headers: { Authorization: `Token ${token}` }
     })
     .then(() => {
@@ -64,7 +64,7 @@ function AdminDashboard() {
       return;
     }
     const token = localStorage.getItem("token");
-    axios.post("http://127.0.0.1:8000/api/assign-course/", {
+    axios.post(`${API_BASE_URL}/api/assign-course/`, {
       student_id: selectedUser,
       course_id: selectedCourse
     }, { headers: { Authorization: `Token ${token}` } })
