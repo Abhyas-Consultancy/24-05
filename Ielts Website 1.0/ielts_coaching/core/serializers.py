@@ -90,7 +90,7 @@
 
 from rest_framework import serializers
 from .models import RecordedClass, StudyMaterial, MockAssignment, Submission, User, Course, StudentCourse, CourseBundle, Module
-
+from django.db import models
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -110,6 +110,7 @@ class UserSerializer(serializers.ModelSerializer):
 class CourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
+        # fields='__all__'
         fields = ['id', 'title', 'description', 'created_at', 'created_by']
 
 class RecordedClassSerializer(serializers.ModelSerializer):
@@ -149,12 +150,33 @@ class StudentCourseSerializer(serializers.ModelSerializer):
         model = StudentCourse
         fields = ['id', 'student', 'course', 'enrolled_at']
 
+# class CourseBundleSerializer(serializers.ModelSerializer):
+#     content = serializers.SerializerMethodField()
+
+#     class Meta:
+#         model = CourseBundle
+#         fields = ['id', 'module', 'content_type', 'content_id', 'content', 'description']
+#         read_only_fields = ['content']
+#         extra_kwargs = {
+#             'module': {'write_only': True}
+#         }
+   
+#     def get_content(self, obj):
+#         if obj.content_type == 'video':
+#             return RecordedClassSerializer(RecordedClass.objects.get(id=obj.content_id)).data
+#         elif obj.content_type == 'study_material':
+#             return StudyMaterialSerializer(StudyMaterial.objects.get(id=obj.content_id)).data
+#         elif obj.content_type == 'assignment':
+#             return MockAssignmentSerializer(MockAssignment.objects.get(id=obj.content_id)).data
+#         return None
+
+
 class CourseBundleSerializer(serializers.ModelSerializer):
-    content = serializers.SerializerMethodField()
+    content = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = CourseBundle
-        fields = ['id', 'order', 'content_type', 'content', 'description']
+        fields = ['id', 'module', 'content_type', 'content_id', 'content', 'description']
 
     def get_content(self, obj):
         if obj.content_type == 'video':
@@ -165,10 +187,15 @@ class CourseBundleSerializer(serializers.ModelSerializer):
             return MockAssignmentSerializer(MockAssignment.objects.get(id=obj.content_id)).data
         return None
 
+
 class ModuleSerializer(serializers.ModelSerializer):
     bundles = CourseBundleSerializer(many=True, read_only=True)
 
     class Meta:
         model = Module
         fields = ['id', 'title', 'order', 'bundles']
+        # fields='__all__'
+
+
+
 

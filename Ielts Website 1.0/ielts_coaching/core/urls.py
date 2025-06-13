@@ -116,7 +116,8 @@ from .views import (
     RegisterView, LoginView, UserList, CourseViewSet, RecordedClassViewSet,
     StudyMaterialViewSet, MockAssignmentViewSet, SubmissionListCreate,
     SubmissionList, AssignCourseToStudent,CreateCourseBundle,StudentMockAssignmentList,EvaluateSubmission,StudentCourseListView,CourseRoadmapView,SkillContentView
-    ,CourseBundleListCreateView,CourseBundleDetailView,ModuleListCreateView,UnlockNextModuleView
+    ,CourseBundleListCreateView,CourseBundleDetailView,UnlockNextModuleView,ModuleListCreateAPIView,ModuleRetrieveUpdateDestroyAPIView
+    ,BundleListCreateAPIView,BundleRetrieveUpdateDestroyAPIView
 )
 
 router = DefaultRouter()
@@ -150,9 +151,18 @@ urlpatterns = [
     path('skill-content/<str:skill>/', SkillContentView.as_view(), name='skill-content'),
     path('course-bundles/<int:course_id>/', CourseBundleListCreateView.as_view(), name='course-bundle-list-create'),
     path('course-bundle/<int:bundle_id>/', CourseBundleDetailView.as_view(), name='course-bundle-detail'),
-    path('course/<int:course_id>/modules/', ModuleListCreateView.as_view(), name='module-list-create'),
+    # path('course/<int:course_id>/modules/', ModuleListCreateView.as_view(), name='module-list-create'),
     path('unlock-next-module/', UnlockNextModuleView.as_view(), name='unlock-next-module'),
 
     path('submissions/', SubmissionListCreate.as_view(), name='submission-list-create'),
     path('assign-course/', AssignCourseToStudent.as_view(), name='assign-course'),
+    # Module routes
+    path('courses/<int:course_id>/modules/', ModuleListCreateAPIView.as_view(), name='module-list-create'),
+    
+    path('modules/<int:pk>/', ModuleRetrieveUpdateDestroyAPIView.as_view(), name='module-detail'),
+
+    # Bundle routes inside module
+    path('modules/<int:module_id>/bundles/', BundleListCreateAPIView.as_view(), name='bundle-list-create'),
+    path('bundles/<int:pk>/', BundleRetrieveUpdateDestroyAPIView.as_view(), name='bundle-detail'),
 ]
+

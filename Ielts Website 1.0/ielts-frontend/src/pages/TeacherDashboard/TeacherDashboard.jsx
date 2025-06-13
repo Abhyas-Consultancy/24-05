@@ -35,12 +35,12 @@
   //     const config = { headers: { Authorization: `Token ${token}` } };
 
   //     axios
-  //       .get("http://127.0.0.1:8000/api/recorded-classes/", config)
+  //       .get("${API_BASE_URL}/api/recorded-classes/", config)
   //       .then((response) => setRecordedClasses(response.data))
   //       .catch((error) => console.error("Error fetching recorded classes:", error));
 
   //     axios
-  //       .get("http://127.0.0.1:8000/api/study-materials/", config)
+  //       .get("${API_BASE_URL}/api/study-materials/", config)
   //       .then((response) => setStudyMaterials(response.data))
   //       .catch((error) => console.error("Error fetching study materials:", error));
 
@@ -1471,16 +1471,19 @@
         //   </div>
         // </section>
 
-
+// 11 Current Final
 import { useState, useEffect } from "react";
 import axios from "axios";
 import TextContainer from "../../components/TextContainer";
-
+import { useNavigate } from "react-router-dom";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 function TeacherDashboard() {
   const [recordedClasses, setRecordedClasses] = useState([]);
   const [studyMaterials, setStudyMaterials] = useState([]);
   const [mockAssignments, setMockAssignments] = useState([]);
   const [courses, setCourses] = useState([]);
+  const navigate = useNavigate();
+  
   const [uploadData, setUploadData] = useState({
     title: "",
     description: "",
@@ -1506,25 +1509,26 @@ function TeacherDashboard() {
       return;
     }
 
+
     const config = { headers: { Authorization: `Token ${token}` } };
 
     axios
-      .get("http://127.0.0.1:8000/api/recorded-classes/", config)
+      .get(`${API_BASE_URL}/api/recorded-classes/`, config)
       .then((response) => setRecordedClasses(response.data))
       .catch((error) => console.error("Error fetching recorded classes:", error));
 
     axios
-      .get("http://127.0.0.1:8000/api/study-materials/", config)
+      .get(`${API_BASE_URL}/api/study-materials/`, config)
       .then((response) => setStudyMaterials(response.data))
       .catch((error) => console.error("Error fetching study materials:", error));
 
     axios
-      .get("http://127.0.0.1:8000/api/mock-assignments/", config)
+      .get(`${API_BASE_URL}/api/mock-assignments/`, config)
       .then((response) => setMockAssignments(response.data))
       .catch((error) => console.error("Error fetching mock assignments:", error));
 
     axios
-      .get("http://127.0.0.1:8000/api/courses/", config)
+      .get(`${API_BASE_URL}/api/courses/`, config)
       .then((response) => setCourses(response.data))
       .catch((error) => console.error("Error fetching courses:", error));
   }, []);
@@ -1556,7 +1560,7 @@ function TeacherDashboard() {
 
     try {
       const token = localStorage.getItem("token");
-      await axios.post(`http://127.0.0.1:8000/api/${endpoint}/`, formData, {
+      await axios.post(`${API_BASE_URL}/api/${endpoint}/`, formData, {
         headers: {
           Authorization: `Token ${token}`,
           "Content-Type": "multipart/form-data",
@@ -1571,15 +1575,15 @@ function TeacherDashboard() {
 
       const config = { headers: { Authorization: `Token ${token}` } };
       if (endpoint === "recorded-classes") {
-        const res = await axios.get(`http://127.0.0.1:8000/api/recorded-classes/`, config);
+        const res = await axios.get(`${API_BASE_URL}/api/recorded-classes/`, config);
         setRecordedClasses(res.data);
       }
       if (endpoint === "study-materials") {
-        const res = await axios.get(`http://127.0.0.1:8000/api/study-materials/`, config);
+        const res = await axios.get(`${API_BASE_URL}/api/study-materials/`, config);
         setStudyMaterials(res.data);
       }
       if (endpoint === "mock-assignments") {
-        const res = await axios.get(`http://127.0.0.1:8000/api/mock-assignments/`, config);
+        const res = await axios.get(`${API_BASE_URL}/api/mock-assignments/`, config);
         setMockAssignments(res.data);
       }
     } catch (error) {
@@ -1593,7 +1597,7 @@ function TeacherDashboard() {
 
     try {
       const token = localStorage.getItem("token");
-      await axios.post("http://127.0.0.1:8000/api/create-course-bundle/", courseBundle, {
+      await axios.post(`${API_BASE_URL}/api/create-course-bundle/`, courseBundle, {
         headers: { Authorization: `Token ${token}` },
       });
 
@@ -1606,7 +1610,7 @@ function TeacherDashboard() {
       });
       alert("Course bundle created successfully!");
 
-      const res = await axios.get("http://127.0.0.1:8000/api/courses/", {
+      const res = await axios.get(`${API_BASE_URL}/api/courses/`, {
         headers: { Authorization: `Token ${token}` },
       });
       setCourses(res.data);
@@ -1614,7 +1618,15 @@ function TeacherDashboard() {
       setUploadError(error.response?.data?.error || "Course bundle creation failed.");
     }
   };
-
+  const handleDelete = async (type, id) => {
+    try {
+      await axios.delete(`${API_BASE_URL}/api/${type}/${id}/`, config);
+      await refreshAllData();
+      alert(`${type} deleted successfully!`);
+    } catch (error) {
+      alert("Delete failed.");
+    }
+  };
   return (
     <div className="bg-brandCream min-h-screen p-6">
       <h1 className="text-brandRed text-5xl font-extrabold mb-6 text-center">Teacher Dashboard</h1>
@@ -1936,8 +1948,20 @@ function TeacherDashboard() {
             </button>
           </div>
         </section>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {courses.map((course) => (
+                  <div key={course.id} className="bg-white p-4 rounded-lg shadow-lg">
+                    <h3 className="font-bold mb-2">{course.title}</h3>
 
-
+                    <button
+                      className="bg-brandRed text-white px-4 py-2 rounded-lg hover:bg-brandCream hover:text-brandRed transition duration-150 mt-2"
+                      onClick={() => navigate(`/teacher/course-editor/${course.id}`)}
+                    >
+                      Edit Roadmap
+                    </button>
+                  </div>
+                ))}
+              </div>        
 
          {/* Delete Section */}
          <section className="mb-12">
@@ -1969,3 +1993,4 @@ function TeacherDashboard() {
 }
 
 export default TeacherDashboard;
+

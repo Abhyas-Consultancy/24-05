@@ -258,12 +258,19 @@ class StudentCourseListView(APIView):
         return Response(serializer.data)
 
 # View for fetching the course roadmap
+# class CourseRoadmapView(APIView):
+#     permission_classes = [IsAuthenticated, IsStudent]
+
+#     def get(self, request, course_id):
+#         bundles = CourseBundle.objects.filter(module__course_id=course_id)
+#         serializer = CourseBundleSerializer(bundles, many=True)
+#         return Response(serializer.data)
 class CourseRoadmapView(APIView):
-    permission_classes = [IsAuthenticated, IsStudent]
+    permission_classes = [IsAuthenticated, IsStudent | IsTeacher]
 
     def get(self, request, course_id):
-        bundles = CourseBundle.objects.filter(module__course_id=course_id)
-        serializer = CourseBundleSerializer(bundles, many=True)
+        modules = Module.objects.filter(course_id=course_id).order_by('order')
+        serializer = ModuleSerializer(modules, many=True)
         return Response(serializer.data)
 
 # View for fetching skill-based content
@@ -331,18 +338,36 @@ class CourseBundleDetailView(APIView):
         bundle.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
     
-class ModuleListCreateView(APIView):
-    permission_classes = [IsAuthenticated, IsTeacher]
+# class ModuleListCreateAPIView(generics.ListCreateAPIView):
+#     serializer_class = ModuleSerializer
+#     permission_classes = [permissions.IsAuthenticated, IsTeacher | IsAdmin]
 
-    def get(self, request, course_id):
-        modules = Module.objects.filter(course_id=course_id)
-        return Response(ModuleSerializer(modules, many=True).data)
+#     def get_queryset(self):
+#         course_id = self.kwargs['course_id']
+#         return Module.objects.filter(course_id=course_id)
 
-    def post(self, request, course_id):
+#     def perform_create(self, serializer):
+#         course_id = self.kwargs['course_id']
+#         course = Course.objects.get(id=course_id)
+#         serializer.save(course=course)
+
+class ModuleListCreateAPIView(generics.ListCreateAPIView):
+    serializer_class = ModuleSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        course_id = self.kwargs['course_id']
+        return Module.objects.filter(course_id=course_id).order_by('order')
+
+    def perform_create(self, serializer):
+        course_id = self.kwargs['course_id']
         course = Course.objects.get(id=course_id)
-        module = Module.objects.create(course=course, title=request.data['title'], order=request.data['order'])
-        return Response(ModuleSerializer(module).data)
+        serializer.save(course=course)
 
+class ModuleRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Module.objects.all()
+    serializer_class = ModuleSerializer
+    permission_classes = [permissions.IsAuthenticated, IsTeacher | IsAdmin]
 class UnlockNextModuleView(APIView):
     def post(self, request):
         user = request.user
@@ -358,3 +383,22 @@ class UnlockNextModuleView(APIView):
             StudentModuleProgress.objects.get_or_create(student=user, module=next_module, defaults={'is_unlocked': True})
 
         return Response({'status': 'next module unlocked'})
+
+class BundleListCreateAPIView(generics.ListCreateAPIView):
+    serializer_class = CourseBundleSerializer
+    permission_classes = [permissions.IsAuthenticated, IsTeacher | IsAdmin]
+
+    def get_queryset(self):
+        module_id = self.kwargs['module_id']
+        return CourseBundle.objects.filter(module_id=module_id)
+
+    def perform_create(self, serializer):
+        module_id = self.kwargs['module_id']
+        module = Module.objects.get(id=module_id)
+        serializer.save(module=module)
+
+
+class BundleRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = CourseBundle.objects.all()
+    serializer_class = CourseBundleSerializer
+    permission_classes = [permissions.IsAuthenticated, IsTeacher | IsAdmin]

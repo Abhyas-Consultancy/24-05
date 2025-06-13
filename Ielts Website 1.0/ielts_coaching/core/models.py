@@ -306,7 +306,7 @@ class StudentCourse(models.Model):
 
 class CourseBundle(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='bundles')
-    order = models.IntegerField()  # To define the sequence in the roadmap
+    module = models.ForeignKey('Module', on_delete=models.CASCADE, related_name='bundles')
     content_type = models.CharField(max_length=50, choices=(
         ('video', 'Video'),
         ('study_material', 'Study Material'),
@@ -314,13 +314,12 @@ class CourseBundle(models.Model):
     ))
     content_id = models.IntegerField()  # ID of the video, study material, or assignment
     description = models.TextField(blank=True)
-
+    
     class Meta:
-        ordering = ['order']
+        ordering = ['module_id']
 
     def __str__(self):
-        return f"Bundle {self.order} for {self.course.title}"
-    
+        return f"Bundle {self.module.module_id} for {self.course.title}"  
 
 class Module(models.Model):
     course = models.ForeignKey('Course', on_delete=models.CASCADE, related_name='modules')
@@ -329,19 +328,20 @@ class Module(models.Model):
 
     class Meta:
         ordering = ['order']
-
     def __str__(self):
-        return f"{self.course.title} - Module {self.order}: {self.title}"
+        return f"{self.title} (Order: {self.order})"
+    # def __str__(self):
+    #     return f"{self.course.title} - Module {self.order}: {self.title}"
 
-class CourseBundle(models.Model):
-    module = models.ForeignKey('Module', on_delete=models.CASCADE, related_name='bundles')
-    content_type = models.CharField(max_length=50, choices=(
-        ('video', 'Video'),
-        ('study_material', 'Study Material'),
-        ('assignment', 'Assignment'),
-    ))
-    content_id = models.IntegerField()
-    description = models.TextField(blank=True)
+# class CourseBundle(models.Model):
+#     module = models.ForeignKey('Module', on_delete=models.CASCADE, related_name='bundles')
+#     content_type = models.CharField(max_length=50, choices=(
+#         ('video', 'Video'),
+#         ('study_material', 'Study Material'),
+#         ('assignment', 'Assignment'),
+#     ))
+#     content_id = models.IntegerField()
+#     description = models.TextField(blank=True)
 
 class StudentModuleProgress(models.Model):
     student = models.ForeignKey('User', on_delete=models.CASCADE)

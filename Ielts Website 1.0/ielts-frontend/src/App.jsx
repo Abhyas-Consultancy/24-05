@@ -807,6 +807,8 @@ import StudentDashboard from "./pages/StudentDashboard";
 import TeacherDashboard from "./pages/TeacherDashboard";
 import CourseRoadmap from "./pages/CourseRoadmap";
 import SkillContent from "./pages/SkillContent";
+import TeacherCourseEditor from './pages/Teacher/TeacherCourseEditor';
+
 
 function App() {
   const navigate = useNavigate();
@@ -857,6 +859,7 @@ function App() {
               )
             }
           />
+          <Route path="/teacher/course-editor/:courseId" element={<TeacherCourseEditor />} />
           <Route
             path="/register"
             element={
