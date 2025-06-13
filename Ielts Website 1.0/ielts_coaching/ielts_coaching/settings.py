@@ -142,6 +142,9 @@
 
 import os
 from pathlib import Path
+from dotenv import load_dotenv
+
+load_dotenv()
 # Build paths inside the project
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -195,15 +198,40 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ielts_coaching.wsgi.application'
 
-# Database (PostgreSQL)
+# CORS settings for React
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:3000",
+#     "http://localhost:5173",
+# ]
+
+# # Database (PostgreSQL)
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'ielts_db',
+#         'USER': 'postgres',
+#         'PASSWORD': 'abhay123',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
+# }
+
+
+CORS_ALLOWED_ORIGINS = [
+    "https://<your-vercel-frontend-domain>.vercel.app",  # Add your Vercel domain
+    "http://localhost:3000",  # For local development
+    "http://localhost:5173",
+]
+
+# Database configuration
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ielts_db',
-        'USER': 'postgres',
-        'PASSWORD': 'abhay123',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': os.environ.get("DB_NAME"),
+        'USER': os.environ.get("DB_USER"),
+        'PASSWORD': os.environ.get("DB_PASSWORD"),
+        'HOST': os.environ.get("DB_HOST"),
+        'PORT': os.environ.get("DB_PORT"),
     }
 }
 
@@ -253,11 +281,6 @@ REST_FRAMEWORK = {
     ],
 }
 
-# CORS settings for React
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://localhost:5173",
-]
 
 # Custom user model
 AUTH_USER_MODEL = 'core.User'

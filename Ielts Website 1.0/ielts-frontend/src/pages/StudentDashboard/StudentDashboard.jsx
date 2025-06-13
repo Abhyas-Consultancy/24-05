@@ -255,6 +255,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import TextContainer from "../../components/TextContainer";
+import LoginLogoutButton from '../../components/LoginLogoutButton';
 
 function StudentDashboard() {
   const [recordedClasses, setRecordedClasses] = useState([]);
@@ -367,7 +368,11 @@ function StudentDashboard() {
   if (error) return <div className="text-red-500 text-center mt-10">{error}</div>;
 
   return (
+    
     <div className="bg-brandCream min-h-screen p-6">
+      <div className="absolute top-4 right-4">
+        <LoginLogoutButton />
+      </div>
       <h1 className="text-brandRed text-5xl font-extrabold mb-6 text-center">
         Student Dashboard
       </h1>

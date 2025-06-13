@@ -14,3 +14,4 @@ from django.core.wsgi import get_wsgi_application
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "ielts_coaching.settings")
 
 application = get_wsgi_application()
+app = application  # Required for Render/Vercel

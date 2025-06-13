@@ -144,6 +144,88 @@
 // export default HomePage;
 
 
+// import "./HomePage.css";
+
+// import HomePageHeaderImage from "../../components/HomePageHeaderImage";
+// import HeaderText from "../../components/HeaderText";
+// import JourneyCardCrousel from "../../components/JourneyCardCrousel";
+// import TextContainer from "../../components/TextContainer";
+// import FourGridHover from "../../components/FourGridHover";
+// import LoginLogoutButton from '../../components/LoginLogoutButton';
+
+// // import Achievements from "../../components/Achievements";
+
+// import { Link } from "react-router-dom";
+
+// function HomePage() {
+//   const FourGridHoverCourseContent = [
+//     {
+//       title: "Listening",
+//       description:
+//         "Develop active listening skills with authentic IELTS recordings. Learn strategies to follow conversations, lectures, and interviews effectively. Practice note-taking and prediction techniques. Boost your accuracy and concentration under timed conditions.",
+//     },
+//     {
+//       title: "Reading",
+//       description:
+//         "Master skimming, scanning, and critical reading techniques. Learn how to tackle different question types efficiently. Improve vocabulary and time management for both Academic and General Training modules.",
+//     },
+//     {
+//       title: "Speaking",
+//       description:
+//         "Build fluency and confidence with regular mock speaking tests. Improve pronunciation, vocabulary, and grammatical range. Receive individual feedback and get comfortable speaking on various topics.",
+//     },
+//     {
+//       title: "Writing",
+//       description:
+//         "Covers both Task 1 and Task 2 for Academic and General Training. Learn how to structure essays and reports with coherence and cohesion. Improve grammar and vocabulary. Get personalized feedback on your writing.",
+//     },
+//   ];
+
+//   return (
+//     <>
+//       <div className="absolute top-4 right-4">
+//         <LoginLogoutButton />
+//       </div>
+//       {/* Banner */}
+//       <HomePageHeaderImage />
+
+//       <div className="bg-brandCream mt-[20px]">
+//         <HeaderText />
+//       </div>
+
+//       {/* Journey Carousel */}
+//       <JourneyCardCrousel />
+
+//       {/* Courses */}
+//       <div className="courseDiv p-6">
+//         <p className="text-brandRed text-5xl font-extrabold text-right">
+//           Our Courses
+//         </p>
+//         <TextContainer
+//           type="cream"
+//           text="We provide multiple courses that will help you get ready for IELTS. The courses are integrated with AI to help you analyze yourself with the updated technology. Our IELTS course is designed to help you master all four essential skills — Speaking, Listening, Reading, and Writing."
+//           styleClass="my-[20px]"
+//         />
+//         <FourGridHover contents={FourGridHoverCourseContent} />
+
+//         {/* 🚀 Demo Button */}
+//         <div className="mt-8 flex justify-center">
+//           <Link to="/demo">
+//             <button className="bg-brandRed text-white px-6 py-3 rounded-xl text-lg hover:bg-red-700 transition-all">
+//               Try Demo Course
+//             </button>
+//           </Link>
+//         </div>
+//       </div>
+
+
+//     </>
+//   );
+// }
+
+// export default HomePage;
+
+
 import "./HomePage.css";
 
 import HomePageHeaderImage from "../../components/HomePageHeaderImage";
@@ -151,8 +233,7 @@ import HeaderText from "../../components/HeaderText";
 import JourneyCardCrousel from "../../components/JourneyCardCrousel";
 import TextContainer from "../../components/TextContainer";
 import FourGridHover from "../../components/FourGridHover";
-// import Achievements from "../../components/Achievements";
-
+import LoginLogoutButton from '../../components/LoginLogoutButton';
 import { Link } from "react-router-dom";
 
 function HomePage() {
@@ -180,30 +261,36 @@ function HomePage() {
   ];
 
   return (
-    <>
+    <div className="relative min-h-screen bg-white">
+      {/* Top-right Login/Logout button */}
+      <div className="absolute top-4 right-4 z-50">
+        <LoginLogoutButton />
+      </div>
+
       {/* Banner */}
       <HomePageHeaderImage />
 
+      {/* Main Content */}
       <div className="bg-brandCream mt-[20px]">
         <HeaderText />
       </div>
 
-      {/* Journey Carousel */}
       <JourneyCardCrousel />
 
-      {/* Courses */}
       <div className="courseDiv p-6">
         <p className="text-brandRed text-5xl font-extrabold text-right">
           Our Courses
         </p>
+
         <TextContainer
           type="cream"
           text="We provide multiple courses that will help you get ready for IELTS. The courses are integrated with AI to help you analyze yourself with the updated technology. Our IELTS course is designed to help you master all four essential skills — Speaking, Listening, Reading, and Writing."
           styleClass="my-[20px]"
         />
+
         <FourGridHover contents={FourGridHoverCourseContent} />
 
-        {/* 🚀 Demo Button */}
+        {/* Demo Button */}
         <div className="mt-8 flex justify-center">
           <Link to="/demo">
             <button className="bg-brandRed text-white px-6 py-3 rounded-xl text-lg hover:bg-red-700 transition-all">
@@ -212,9 +299,7 @@ function HomePage() {
           </Link>
         </div>
       </div>
-
-
-    </>
+    </div>
   );
 }
 
