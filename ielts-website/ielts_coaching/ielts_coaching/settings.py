@@ -218,7 +218,7 @@ WSGI_APPLICATION = 'ielts_coaching.wsgi.application'
 
 
 CORS_ALLOWED_ORIGINS = [
-    "https://<your-vercel-frontend-domain>.vercel.app",  # Add your Vercel domain
+    "https://24-05-qyrn.vercel.app",  # Add your Vercel domain
     "http://localhost:3000",  # For local development
     "http://localhost:5173",
 ]
