@@ -443,8 +443,7 @@ class ModuleBundleSerializer(serializers.ModelSerializer):
     def get_content_title(self, obj):
         if obj.content_type == 'video':
             video = RecordedClass.objects.filter(id=obj.content_id).first()
-            # return video.title if video else ""
-            return RecordedClassSerializer(video).data if video else None
+            return video.title if video else ""
         elif obj.content_type == 'study_material':
             material = StudyMaterial.objects.filter(id=obj.content_id).first()
             return material.title if material else ""

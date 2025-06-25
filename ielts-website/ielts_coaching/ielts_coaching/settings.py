@@ -142,9 +142,9 @@
 
 import os
 from pathlib import Path
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 
-load_dotenv()
+# load_dotenv()
 # Build paths inside the project
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -204,7 +204,7 @@ WSGI_APPLICATION = 'ielts_coaching.wsgi.application'
 #     "http://localhost:5173",
 # ]
 
-# # Database (PostgreSQL)
+# Database (PostgreSQL)
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',

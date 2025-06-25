@@ -419,7 +419,7 @@ function StudentDashboard() {
           </div>
         )}
       </section>
-
+{/* 
       <section className="mb-12 bg-brandRed text-white p-6 rounded-lg">
         <h2 className="text-3xl font-bold mb-4">Recorded Classes</h2>
         {recordedClasses.length === 0 ? (
@@ -534,7 +534,7 @@ function StudentDashboard() {
           </button>
         </div>
       </section>
-
+ */}
       <section className="mb-12">
         <h2 className="text-brandRed text-3xl font-bold mb-4">My Submissions</h2>
         {submissions.length === 0 ? (

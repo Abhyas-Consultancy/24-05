@@ -1,10 +1,133 @@
+// import React, { useState, useEffect } from 'react';
+// import { useParams, useNavigate } from 'react-router-dom';
+// import axios from 'axios';
+
+// const CourseRoadmap = () => {
+//   const { courseId } = useParams();
+//   const [bundles, setBundles] = useState([]);
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState('');
+//   const navigate = useNavigate();
+
+//   // useEffect(() => {
+//   //   const fetchRoadmap = async () => {
+//   //     try {
+//   //       const token = localStorage.getItem('token');
+//   //       const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+//   //       const response = await axios.get(`${API_BASE_URL}/api/course-roadmap/${courseId}/`, {
+//   //         headers: { Authorization: `Token ${token}` },
+//   //       });
+//   //       setBundles(response.data);
+//   //     } catch (err) {
+//   //       setError('Failed to load roadmap');
+//   //     } finally {
+//   //       setLoading(false);
+//   //     }
+//   //   };
+//   //   fetchRoadmap();
+//   // }, [courseId]);
+
+//   useEffect(() => {
+//     const fetchRoadmap = async () => {
+//       try {
+//         const token = localStorage.getItem('token');
+//         const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+//         const response = await axios.get(`${API_BASE_URL}/api/course-roadmap/${courseId}/`, {
+//           headers: { Authorization: `Token ${token}` },
+//         });
+//         console.log('Roadmap Response:', response.data); // ✅ safe here
+//         setBundles(response.data);
+//         setLoading(false);
+//       } catch (err) {
+//         console.error('Fetch roadmap error:', err);
+//         setError('Failed to load roadmap');
+//         setLoading(false);
+//       }
+//     };
+//     fetchRoadmap();
+//   }, [courseId]);
+
+//   if (loading) return <div className="text-center mt-10 text-brandRed">Loading...</div>;
+//   if (error) return <div className="text-red-500 text-center mt-10">{error}</div>;
+
+//   return (
+//     <div className="bg-brandCream min-h-screen p-6">
+//       <button
+//         onClick={() => navigate('/student-dashboard')}
+//         className="mb-4 bg-brandRed text-white px-4 py-2 rounded-lg hover:bg-brandCream hover:text-brandRed transition duration-150"
+//       >
+//         Back to Dashboard
+//       </button>
+//       <h2 className="text-brandRed text-3xl font-bold mb-6">Course Roadmap</h2>
+
+//       {bundles.length === 0 ? (
+//         <p className="text-gray-600">No roadmap items found for this course.</p>
+//       ) : (
+//         <div className="space-y-6">
+//           {bundles.map((bundle) => {
+//             const titleCaseType = bundle.content_type
+//               ? bundle.content_type.charAt(0).toUpperCase() + bundle.content_type.slice(1)
+//               : 'Unknown';
+
+//             return (
+//               <div key={bundle.id} className="bg-white p-4 rounded-lg shadow-lg">
+//                 <h3 className="text-brandRed text-lg font-semibold">
+//                   Step {bundle.order}: {titleCaseType}
+//                 </h3>
+
+//                 {bundle.content ? (
+//                   <>
+//                     <p className="text-gray-600">{bundle.description}</p>
+//                     <h4 className="text-md font-medium mt-2">{bundle.content.title}</h4>
+
+//                     {bundle.content_type === 'video' && (
+//                       <>
+//                         <p className="text-gray-500">Skill: {bundle.content.skill || 'N/A'}</p>
+//                         <video controls className="w-full mt-2 rounded-lg">
+//                           <source src={bundle.content.video_file} type="video/mp4" />
+//                           Your browser does not support the video tag.
+//                         </video>
+//                       </>
+//                     )}
+
+//                     {bundle.content_type === 'study_material' && (
+//                       <>
+//                         <p className="text-gray-500">Skill: {bundle.content.skill || 'N/A'}</p>
+//                         <a
+//                           href={bundle.content.file}
+//                           target="_blank"
+//                           rel="noopener noreferrer"
+//                           className="text-white bg-brandRed px-4 py-2 rounded-lg hover:bg-brandCream hover:text-brandRed transition duration-150 mt-2 inline-block"
+//                         >
+//                           View/Download
+//                         </a>
+//                       </>
+//                     )}
+
+//                     {bundle.content_type === 'assignment' && (
+//                       <p className="text-gray-500">Skill: {bundle.content.skill || 'N/A'}</p>
+//                     )}
+//                   </>
+//                 ) : (
+//                   <p className="text-gray-500">Content not available.</p>
+//                 )}
+//               </div>
+//             );
+//           })}
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default CourseRoadmap;
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const CourseRoadmap = () => {
   const { courseId } = useParams();
-  const [bundles, setBundles] = useState([]);
+  const [modules, setModules] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const navigate = useNavigate();
@@ -17,9 +140,11 @@ const CourseRoadmap = () => {
         const response = await axios.get(`${API_BASE_URL}/api/course-roadmap/${courseId}/`, {
           headers: { Authorization: `Token ${token}` },
         });
-        setBundles(response.data);
+        console.log("Roadmap Response:", response.data);
+        setModules(response.data);
         setLoading(false);
       } catch (err) {
+        console.error('Error fetching roadmap:', err);
         setError('Failed to load roadmap');
         setLoading(false);
       }
@@ -39,49 +164,66 @@ const CourseRoadmap = () => {
         Back to Dashboard
       </button>
       <h2 className="text-brandRed text-3xl font-bold mb-6">Course Roadmap</h2>
-      {bundles.length === 0 ? (
+
+      {modules.length === 0 ? (
         <p className="text-gray-600">No roadmap items found for this course.</p>
       ) : (
-        <div className="space-y-6">
-          {bundles.map((bundle) => (
-            <div key={bundle.id} className="bg-white p-4 rounded-lg shadow-lg">
-              <h3 className="text-brandRed text-lg font-semibold">Step {bundle.order}: {bundle.content_type.charAt(0).toUpperCase() + bundle.content_type.slice(1)}</h3>
-              {bundle.content ? (
-                <>
-                  <p className="text-gray-600">{bundle.description}</p>
-                  <h4 className="text-md font-medium mt-2">{bundle.content.title}</h4>
-                  {bundle.content_type === 'video' && (
+        modules.map((module, moduleIndex) => (
+          <div key={module.id} className="mb-8">
+            <h3 className="text-xl font-semibold text-brandRed mb-4">Module {moduleIndex + 1}: {module.title}</h3>
+            {module.bundles.length === 0 ? (
+              <p className="text-gray-600 ml-4">No content available in this module.</p>
+            ) : (
+              module.bundles.map((bundle, index) => (
+                <div key={bundle.id} className="bg-white p-4 rounded-lg shadow-md mb-4">
+                  <h4 className="text-brandRed font-semibold">
+                    Step {index + 1}: {bundle.content_type.charAt(0).toUpperCase() + bundle.content_type.slice(1)}
+                  </h4>
+
+                  {bundle.content_title ? (
                     <>
-                      <p className="text-gray-500">Skill: {bundle.content.skill || 'N/A'}</p>
-                      <video controls className="w-full mt-2 rounded-lg">
-                        <source src={bundle.content.video_file} type="video/mp4" />
-                        Your browser does not support the video tag.
-                      </video>
+                      <p className="text-gray-600 mt-1">{bundle.description}</p>
+                      <p className="text-gray-800 font-medium mt-1">{bundle.content_title.title}</p>
+
+                      {bundle.content_type === 'video' && (
+                        <>
+                          <p className="text-gray-500">Skill: {bundle.content_title.skill || 'N/A'}</p>
+                          <video controls className="w-full mt-2 rounded-lg">
+                            <source
+                              src={`${import.meta.env.VITE_API_BASE_URL}${bundle.content_title.video_file}`}
+                              type="video/mp4"
+                            />
+                            Your browser does not support the video tag.
+                          </video>
+                        </>
+                      )}
+
+                      {bundle.content_type === 'study_material' && (
+                        <>
+                          <p className="text-gray-500">Skill: {bundle.content_title.skill || 'N/A'}</p>
+                          <a
+                            href={`${import.meta.env.VITE_API_BASE_URL}${bundle.content_title.file}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-white bg-brandRed px-4 py-2 rounded-lg hover:bg-brandCream hover:text-brandRed transition duration-150 mt-2 inline-block"
+                          >
+                            View/Download Material
+                          </a>
+                        </>
+                      )}
+
+                      {bundle.content_type === 'assignment' && (
+                        <p className="text-gray-500">Skill: {bundle.content_title.skill || 'N/A'}</p>
+                      )}
                     </>
+                  ) : (
+                    <p className="text-gray-500">Content not available.</p>
                   )}
-                  {bundle.content_type === 'study_material' && (
-                    <>
-                      <p className="text-gray-500">Skill: {bundle.content.skill || 'N/A'}</p>
-                      <a
-                        href={bundle.content.file}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-white bg-brandRed px-4 py-2 rounded-lg hover:bg-brandCream hover:text-brandRed transition duration-150 mt-2 inline-block"
-                      >
-                        View/Download
-                      </a>
-                    </>
-                  )}
-                  {bundle.content_type === 'assignment' && (
-                    <p className="text-gray-500">Skill: {bundle.content.skill}</p>
-                  )}
-                </>
-              ) : (
-                <p className="text-gray-500">Content not available.</p>
-              )}
-            </div>
-          ))}
-        </div>
+                </div>
+              ))
+            )}
+          </div>
+        ))
       )}
     </div>
   );
