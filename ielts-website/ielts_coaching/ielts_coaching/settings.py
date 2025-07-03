@@ -291,4 +291,5 @@ REST_FRAMEWORK = {
 # Custom user model
 AUTH_USER_MODEL = 'core.User'
 
-OPENAI_API_KEY="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"
+
+OPENAI_API_KEY=os.environ.get("AI_Key")
