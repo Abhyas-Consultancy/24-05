@@ -121,32 +121,276 @@
 // };
 
 // export default CourseRoadmap;
+// 
+// 2sewncond
+// import React, { useState, useEffect } from 'react';
+// import { useParams, useNavigate } from 'react-router-dom';
+// import axios from 'axios';
+
+// const CourseRoadmap = () => {
+//   const { courseId } = useParams();
+//   const [modules, setModules] = useState([]);
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState('');
+//   const navigate = useNavigate();
+
+//   useEffect(() => {
+//     const fetchRoadmap = async () => {
+//       try {
+//         const token = localStorage.getItem('token');
+//         const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+//         const response = await axios.get(`${API_BASE_URL}/api/course-roadmap/${courseId}/`, {
+//           headers: { Authorization: `Token ${token}` },
+//         });
+//         console.log("Roadmap Response:", response.data);
+//         setModules(response.data);
+//         setLoading(false);
+//       } catch (err) {
+//         console.error('Error fetching roadmap:', err);
+//         setError('Failed to load roadmap');
+//         setLoading(false);
+//       }
+//     };
+//     fetchRoadmap();
+//   }, [courseId]);
+
+//   if (loading) return <div className="text-center mt-10 text-brandRed">Loading...</div>;
+//   if (error) return <div className="text-red-500 text-center mt-10">{error}</div>;
+
+//   return (
+//     <div className="bg-brandCream min-h-screen p-6">
+//       <button
+//         onClick={() => navigate('/student-dashboard')}
+//         className="mb-4 bg-brandRed text-white px-4 py-2 rounded-lg hover:bg-brandCream hover:text-brandRed transition duration-150"
+//       >
+//         Back to Dashboard
+//       </button>
+//       <h2 className="text-brandRed text-3xl font-bold mb-6">Course Roadmap</h2>
+
+//       {modules.length === 0 ? (
+//         <p className="text-gray-600">No roadmap items found for this course.</p>
+//       ) : (
+//         modules.map((module, moduleIndex) => (
+//           <div key={module.id} className="mb-8">
+//             <h3 className="text-xl font-semibold text-brandRed mb-4">Module {moduleIndex + 1}: {module.title}</h3>
+//             {module.bundles.length === 0 ? (
+//               <p className="text-gray-600 ml-4">No content available in this module.</p>
+//             ) : (
+//               module.bundles.map((bundle, index) => (
+//                 <div key={bundle.id} className="bg-white p-4 rounded-lg shadow-md mb-4">
+//                   <h4 className="text-brandRed font-semibold">
+//                     Step {index + 1}: {bundle.content_type.charAt(0).toUpperCase() + bundle.content_type.slice(1)}
+//                   </h4>
+
+//                   {bundle.content_title ? (
+//                     <>
+//                       <p className="text-gray-600 mt-1">{bundle.description}</p>
+//                       <p className="text-gray-800 font-medium mt-1">{bundle.content_title.title}</p>
+
+//                       {bundle.content_type === 'video' && (
+//                         <>
+//                           <p className="text-gray-500">Skill: {bundle.content_title.skill || 'N/A'}</p>
+//                           <video controls className="w-full mt-2 rounded-lg">
+//                             <source
+//                               src={`${import.meta.env.VITE_API_BASE_URL}${bundle.content_title.video_file}`}
+//                               type="video/mp4"
+//                             />
+//                             Your browser does not support the video tag.
+//                           </video>
+//                         </>
+//                       )}
+
+//                       {bundle.content_type === 'study_material' && (
+//                         <>
+//                           <p className="text-gray-500">Skill: {bundle.content_title.skill || 'N/A'}</p>
+//                           <a
+//                             href={`${import.meta.env.VITE_API_BASE_URL}${bundle.content_title.file}`}
+//                             target="_blank"
+//                             rel="noopener noreferrer"
+//                             className="text-white bg-brandRed px-4 py-2 rounded-lg hover:bg-brandCream hover:text-brandRed transition duration-150 mt-2 inline-block"
+//                           >
+//                             View/Download Material
+//                           </a>
+//                         </>
+//                       )}
+
+//                       {bundle.content_type === 'assignment' && (
+//                         <p className="text-gray-500">Skill: {bundle.content_title.skill || 'N/A'}</p>
+//                       )}
+//                     </>
+//                   ) : (
+//                     <p className="text-gray-500">Content not available.</p>
+//                   )}
+//                 </div>
+//               ))
+//             )}
+//           </div>
+//         ))
+//       )}
+//     </div>
+//   );
+// };
+
+// export default CourseRoadmap;
+
+
+// 3third
+
+// import React, { useState, useEffect } from 'react';
+// import { useParams, useNavigate } from 'react-router-dom';
+// import axios from 'axios';
+// import { toast, ToastContainer } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
+
+// const CourseRoadmap = () => {
+//   const { courseId } = useParams();
+//   const navigate = useNavigate();
+//   const [modules, setModules] = useState([]);
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState('');
+//   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+//   const token = localStorage.getItem('token');
+//   const config = { headers: { Authorization: `Token ${token}` } };
+
+//   useEffect(() => {
+//     const fetchRoadmap = async () => {
+//       try {
+//         const response = await axios.get(`${API_BASE_URL}/api/course-roadmap/${courseId}/`, config);
+//         console.log('Roadmap Response:', JSON.stringify(response.data, null, 2));
+//         setModules(response.data);
+//         setLoading(false);
+//       } catch (err) {
+//         console.error('Error fetching roadmap:', err);
+//         setError('Failed to load roadmap');
+//         setLoading(false);
+//         toast.error('Failed to load course roadmap');
+//       }
+//     };
+//     fetchRoadmap();
+//   }, [courseId]);
+
+//   if (loading) return <div className="text-center mt-10 text-brandRed">Loading...</div>;
+//   if (error) return <div className="text-red-500 text-center mt-10">{error}</div>;
+
+//   return (
+//     <div className="bg-brandCream min-h-screen p-6">
+//       <ToastContainer />
+//       <button
+//         onClick={() => navigate('/student-dashboard')}
+//         className="mb-4 bg-brandRed text-white px-4 py-2 rounded-lg hover:bg-brandCream hover:text-brandRed transition duration-150"
+//       >
+//         Back to Dashboard
+//       </button>
+//       <h2 className="text-brandRed text-3xl font-bold mb-6">Course Roadmap</h2>
+
+//       {modules.length === 0 ? (
+//         <p className="text-gray-600">No roadmap items found for this course.</p>
+//       ) : (
+//         modules.map((module, moduleIndex) => (
+//           <div key={module.id} className="mb-8">
+//             <h3 className="text-xl font-semibold text-brandRed mb-4">
+//               Module {moduleIndex + 1}: {module.title}
+//             </h3>
+//             {module.bundles.length === 0 ? (
+//               <p className="text-gray-600 ml-4">No content available in this module.</p>
+//             ) : (
+//               module.bundles.map((bundle, index) => (
+//                 <div key={bundle.id} className="bg-white p-4 rounded-lg shadow-md mb-4">
+//                   <h4 className="text-brandRed font-semibold">
+//                     Step {index + 1}: {bundle.content_type.charAt(0).toUpperCase() + bundle.content_type.slice(1)}
+//                   </h4>
+
+//                   {bundle.content_title ? (
+//                     <>
+//                       <p className="text-gray-600 mt-1">{bundle.description}</p>
+//                       <p className="text-gray-800 font-medium mt-1">{bundle.content_title.title}</p>
+
+//                       {bundle.content_type === 'video' && (
+//                         <>
+//                           <p className="text-gray-500">Skill: {bundle.content_title.skill || 'N/A'}</p>
+//                           <video controls className="w-full mt-2 rounded-lg">
+//                             <source
+//                               src={`${API_BASE_URL}${bundle.content_title.video_file}`}
+//                               type="video/mp4"
+//                             />
+//                             Your browser does not support the video tag.
+//                           </video>
+//                         </>
+//                       )}
+
+//                       {bundle.content_type === 'study_material' && (
+//                         <>
+//                           <p className="text-gray-500">Skill: {bundle.content_title.skill || 'N/A'}</p>
+//                           <a
+//                             href={`${API_BASE_URL}${bundle.content_title.file}`}
+//                             target="_blank"
+//                             rel="noopener noreferrer"
+//                             className="text-white bg-brandRed px-4 py-2 rounded-lg hover:bg-brandCream hover:text-brandRed transition duration-150 mt-2 inline-block"
+//                           >
+//                             View/Download Material
+//                           </a>
+//                         </>
+//                       )}
+
+//                       {bundle.content_type === 'assignment' && (
+//                         <>
+//                           <p className="text-gray-500">Skill: {bundle.content_title.skill || 'N/A'}</p>
+//                           <button
+//                             onClick={() => navigate(`/assignment/${bundle.content_id}`)}
+//                             className="text-white bg-brandRed px-4 py-2 rounded-lg hover:bg-brandCream hover:text-brandRed transition duration-150 mt-2"
+//                           >
+//                             View Assignment
+//                           </button>
+//                         </>
+//                       )}
+//                     </>
+//                   ) : (
+//                     <p className="text-gray-500">Content not available.</p>
+//                   )}
+//                 </div>
+//               ))
+//             )}
+//           </div>
+//         ))
+//       )}
+//     </div>
+//   );
+// };
+
+// export default CourseRoadmap;
+
+
+// fourth
+
+// src/pages/CourseRoadmap.jsx
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const CourseRoadmap = () => {
   const { courseId } = useParams();
+  const navigate = useNavigate();
   const [modules, setModules] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const navigate = useNavigate();
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+  const token = localStorage.getItem('token');
+  const config = { headers: { Authorization: `Token ${token}` } };
 
   useEffect(() => {
     const fetchRoadmap = async () => {
       try {
-        const token = localStorage.getItem('token');
-        const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-        const response = await axios.get(`${API_BASE_URL}/api/course-roadmap/${courseId}/`, {
-          headers: { Authorization: `Token ${token}` },
-        });
-        console.log("Roadmap Response:", response.data);
+        const response = await axios.get(`${API_BASE_URL}/api/course-roadmap/${courseId}/`, config);
+        console.log('Roadmap Response:', JSON.stringify(response.data, null, 2));
         setModules(response.data);
         setLoading(false);
       } catch (err) {
         console.error('Error fetching roadmap:', err);
         setError('Failed to load roadmap');
         setLoading(false);
+        toast.error('Failed to load course roadmap');
       }
     };
     fetchRoadmap();
@@ -157,6 +401,7 @@ const CourseRoadmap = () => {
 
   return (
     <div className="bg-brandCream min-h-screen p-6">
+      <ToastContainer />
       <button
         onClick={() => navigate('/student-dashboard')}
         className="mb-4 bg-brandRed text-white px-4 py-2 rounded-lg hover:bg-brandCream hover:text-brandRed transition duration-150"
@@ -170,7 +415,9 @@ const CourseRoadmap = () => {
       ) : (
         modules.map((module, moduleIndex) => (
           <div key={module.id} className="mb-8">
-            <h3 className="text-xl font-semibold text-brandRed mb-4">Module {moduleIndex + 1}: {module.title}</h3>
+            <h3 className="text-xl font-semibold text-brandRed mb-4">
+              Module {moduleIndex + 1}: {module.title}
+            </h3>
             {module.bundles.length === 0 ? (
               <p className="text-gray-600 ml-4">No content available in this module.</p>
             ) : (
@@ -183,26 +430,30 @@ const CourseRoadmap = () => {
                   {bundle.content_title ? (
                     <>
                       <p className="text-gray-600 mt-1">{bundle.description}</p>
-                      <p className="text-gray-800 font-medium mt-1">{bundle.content_title.title}</p>
+                      <p className="text-gray-800 font-medium mt-1">
+                        {typeof bundle.content_title === 'string' ? bundle.content_title : bundle.content_title.title}
+                      </p>
 
-                      {bundle.content_type === 'video' && (
+                      {bundle.content_type === 'video' && typeof bundle.content_title === 'object' && bundle.content_title.video_file ? (
                         <>
                           <p className="text-gray-500">Skill: {bundle.content_title.skill || 'N/A'}</p>
-                          <video controls className="w-full mt-2 rounded-lg">
+                          <video controls preload="metadata" className="w-full mt-2 rounded-lg">
                             <source
-                              src={`${import.meta.env.VITE_API_BASE_URL}${bundle.content_title.video_file}`}
+                              src={`${API_BASE_URL}${bundle.content_title.video_file}`}
                               type="video/mp4"
                             />
                             Your browser does not support the video tag.
                           </video>
                         </>
-                      )}
+                      ) : bundle.content_type === 'video' ? (
+                        <p className="text-red-500">Video not available</p>
+                      ) : null}
 
-                      {bundle.content_type === 'study_material' && (
+                      {bundle.content_type === 'study_material' && typeof bundle.content_title === 'object' && bundle.content_title.file ? (
                         <>
                           <p className="text-gray-500">Skill: {bundle.content_title.skill || 'N/A'}</p>
                           <a
-                            href={`${import.meta.env.VITE_API_BASE_URL}${bundle.content_title.file}`}
+                            href={`${API_BASE_URL}${bundle.content_title.file}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-white bg-brandRed px-4 py-2 rounded-lg hover:bg-brandCream hover:text-brandRed transition duration-150 mt-2 inline-block"
@@ -210,10 +461,20 @@ const CourseRoadmap = () => {
                             View/Download Material
                           </a>
                         </>
-                      )}
+                      ) : bundle.content_type === 'study_material' ? (
+                        <p className="text-red-500">Study material not available</p>
+                      ) : null}
 
                       {bundle.content_type === 'assignment' && (
-                        <p className="text-gray-500">Skill: {bundle.content_title.skill || 'N/A'}</p>
+                        <>
+                          <p className="text-gray-500">Skill: {typeof bundle.content_title === 'object' ? bundle.content_title.skill || 'N/A' : 'N/A'}</p>
+                          <button
+                            onClick={() => navigate(`/assignment/${bundle.content_id}`)}
+                            className="text-white bg-brandRed px-4 py-2 rounded-lg hover:bg-brandCream hover:text-brandRed transition duration-150 mt-2"
+                          >
+                            View Assignment
+                          </button>
+                        </>
                       )}
                     </>
                   ) : (

@@ -205,6 +205,7 @@
 
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.contrib.auth import get_user_model
 
 class User(AbstractUser):
     ROLE_CHOICES = (
@@ -368,3 +369,26 @@ class StudentModuleProgress(models.Model):
     module = models.ForeignKey('Module', on_delete=models.CASCADE)
     is_unlocked = models.BooleanField(default=False)
     completed = models.BooleanField(default=False)
+
+class Assignment(models.Model):
+    id = models.AutoField(primary_key=True)
+    test_id = models.CharField(max_length=36, unique=True)
+    title = models.CharField(max_length=255)
+    json_content = models.JSONField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.title
+    
+class AssignmentSubmission(models.Model):
+    id = models.AutoField(primary_key=True)
+    assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE, related_name='submissions')
+    student = models.ForeignKey(User, on_delete=models.CASCADE, related_name='submissions')
+    answers = models.JSONField()  # Stores answers (e.g., {"section-uuid-1_task1": "This is my essay..."})
+    score = models.FloatField(null=True, blank=True)  # Average of task scores
+    ai_analysis = models.JSONField(null=True, blank=True)  # Stores AI evaluation results
+    submitted_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.student.username} - {self.assignment.title}"

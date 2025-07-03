@@ -1,0 +1,170 @@
+{
+  "test_id": "e94bc7fe-46b0-4abe-b686-a48bfa223a71",
+  "title": "Reading Assignment 1",
+  "sections": [
+    {
+      "section_id": "2dee296d-3255-4b35-8dc9-503c4243795f",
+      "name": "READING",
+      "instructions": "",
+      "tasks": [
+        {
+          "id": "9ef46cfd-2d7d-4755-8d2e-716b64a7bb58",
+          "type": "task",
+          "title": "READING PASSAGE 1",
+          "instructions": "You should spend about 20 minutes on Questions 1–13, which are based on Reading Passage 1 below.",
+          "audio": null,
+          "image": null,
+          "content": "Aphantasia: A life without mental images\n\nClose your eyes and imagine walking along a sandy beach and then gazing over the horizon as the Sun rises. How clear is the image that springs to mind?\n\nMost people can readily conjure images inside their head - known as their mind's eye. But this year scientists have described a condition, aphantasia, in which some people are unable to visualise mental images.\n\nNiel Kenmuir, from Lancaster, has always had a blind mind's eye. He knew he was different even in childhood. \"My stepfather, when I couldn't sleep, told me to count sheep, and he explained what he meant, I tried to do it and I couldn't,\" he says. \"I couldn't see any sheep jumping over fences, there was nothing to count.\"\n\nOur memories are often tied up in images, think back to a wedding or first day at school. As a result, Niel admits, some aspects of his memory are \"terrible\", but he is very good at remembering facts. And, like others with aphantasia, he struggles to recognise faces. Yet he does not see aphantasia as a disability, but simply a different way of experiencing life.\n\nMind's eye blind\n\nIronically, Niel now works in a bookshop, although he largely sticks to the non-fiction aisles. His condition begs the question what is going on inside his picture-less mind. I asked him what happens when he tries to picture his fiancee. \"This is the hardest thing to describe, what happens in my head when I think about things,\" he says. \"When I think about my fiancee there is no image, but I am definitely thinking about her, I know today she has her hair up at the back, she's brunette. But I'm not describing an image I am looking at, I'm remembering features about her, that's the strangest thing and maybe that is a source of some regret.\"\n\nThe response from his mates is a very sympathetic: \"You're weird.\" But while Niel is very relaxed about his inability to picture things, it is often a cause of distress for others. One person who took part in a study into aphantasia said he had started to feel \"isolated\" and \"alone\" after discovering that other people could see images in their heads. Being unable to reminisce about his mother years after her death led to him being \"extremely distraught\".\n\nThe super-visualiser\n\nAt the other end of the spectrum is children's book illustrator, Lauren Beard, whose work on the Fairytale Hairdresser series will be familiar to many six-year-olds. Her career relies on the vivid images that leap into her mind's eye when she reads text from her author. When I met her in her box-room studio in Manchester, she was working on a dramatic scene in the next book. The text describes a baby perilously climbing onto a chandelier.\n\n\"Straightaway I can visualise this grand glass chandelier in some sort of French kind of ballroom, and the little baby just swinging off it and really heavy thick curtains,\" she says. \"I think I have a strong imagination, so I can create the world and then keep adding to it so it gets sort of bigger and bigger in my mind and the characters too they sort of evolve. I couldn't really imagine what it's like to not imagine, I think it must be a bit of a shame really.\"\nNot many people have mental imagery as vibrant as Lauren or as blank as Niel. They are the two extremes of visualisation. Adam Zeman, a professor of cognitive and behavioural neurology, wants to compare the lives and experiences of people with aphantasia and its polar-opposite hyperphantasia. His team, based at the University of Exeter, coined the term aphantasia this year in a study in the journal Cortex.\n\nProf Zeman tells the BBC: \"People who have contacted us say they are really delighted that this has been recognised and has been given a name, because they have been trying to explain to people for years that there is this oddity that they find hard to convey to others.\" How we imagine is clearly very subjective - one person's vivid scene could be another's grainy picture. But Prof Zeman is certain that aphantasia is real. People often report being able to dream in pictures, and there have been reported cases of people losing the ability to think in images after a brain injury.\n\nHe is adamant that aphantasia is \"not a disorder\" and says it may affect up to one in 50 people. But he adds: \"I think it makes quite an important difference to their experience of life because many of us spend our lives with imagery hovering somewhere in the mind's eye which we inspect from time to time, it's a variability of human experience.\"",
+          "optionalText": "Questions 1–5",
+          "questions": [
+            {
+              "set_id": "94674352-c97a-44b1-81ac-4b4821e6d0a1",
+              "instructions": "Do the following statements agree with the information in the IELTS reading text?",
+              "optionalText": "In boxes 1-5 on your answer sheet, write\n\nTRUE                          if the statement agrees with the information\n\nFALSE                        if the statement contradicts the information\n\nNOT GIVEN                if there is no information on this",
+              "questions": [
+                {
+                  "question_id": "06ff3836-a329-4733-a0b4-e336ffdcfc10",
+                  "number": "1",
+                  "text": " Aphantasia is a condition, which describes people, for whom it is hard to visualise mental images.",
+                  "type": "true_false_not_given",
+                  "answer": "FALSE",
+                  "options": [
+                    "TRUE",
+                    "FALSE",
+                    "NOT GIVEN"
+                  ]
+                },
+                {
+                  "question_id": "563bc832-351e-43e3-820d-14ba860a886a",
+                  "number": "2",
+                  "text": "Niel Kenmuir was unable to count sheep in his head.",
+                  "type": "true_false_not_given",
+                  "answer": "TRUE",
+                  "options": [
+                    "TRUE",
+                    "FALSE",
+                    "NOT GIVEN"
+                  ]
+                },
+                {
+                  "question_id": "a28c28b1-ff36-4c41-8085-68741b72d1b8",
+                  "number": "3",
+                  "text": "People with aphantasia struggle to remember personal traits and clothes of different people.",
+                  "type": "true_false_not_given",
+                  "answer": "NOT GIVEN",
+                  "options": [
+                    "TRUE",
+                    "FALSE",
+                    "NOT GIVEN"
+                  ]
+                },
+                {
+                  "question_id": "f4a4c6cb-d24f-402c-a04d-c9bc2d05e84a",
+                  "number": "4",
+                  "text": "Niel regrets that he cannot portray an image of his fiancee in his mind. ",
+                  "type": "true_false_not_given",
+                  "answer": "TRUE",
+                  "options": [
+                    "TRUE",
+                    "FALSE",
+                    "NOT GIVEN"
+                  ]
+                },
+                {
+                  "question_id": "25060ae8-f680-4ba2-b0a9-a2c3193a9809",
+                  "number": "5",
+                  "text": "Inability to picture things in someone's head is often a cause of distress for a person. ",
+                  "type": "true_false_not_given",
+                  "answer": "TRUE",
+                  "options": [
+                    "TRUE",
+                    "FALSE",
+                    "NOT GIVEN"
+                  ]
+                },
+                {
+                  "question_id": "b7dfcfbc-ea1e-448b-8800-7047c68eefc2",
+                  "number": "6",
+                  "text": "All people with aphantasia start to feel 'isolated' or 'alone' at some point of their lives. ",
+                  "type": "true_false_not_given",
+                  "answer": "NOT GIVEN",
+                  "options": [
+                    "TRUE",
+                    "FALSE",
+                    "NOT GIVEN"
+                  ]
+                },
+                {
+                  "question_id": "e6753179-e624-4a8e-b245-47d61e2a21bc",
+                  "number": "7",
+                  "text": " Lauren Beard's career depends on her imagination. ",
+                  "type": "true_false_not_given",
+                  "answer": "TRUE",
+                  "options": [
+                    "TRUE",
+                    "FALSE",
+                    "NOT GIVEN"
+                  ]
+                },
+                {
+                  "question_id": "618816b1-9fa0-411b-bd53-b7549f36147c",
+                  "number": "8",
+                  "text": "The author met Lauren Beard when she was working on a comedy scene in her next book. ",
+                  "type": "true_false_not_given",
+                  "answer": "FALSE",
+                  "options": [
+                    "TRUE",
+                    "FALSE",
+                    "NOT GIVEN"
+                  ]
+                }
+              ]
+            },
+            {
+              "set_id": "b599e48f-5637-41de-b040-08d187a5adf7",
+              "instructions": "Questions 9–13",
+              "optionalText": "Complete the sentences below.\n\nWrite NO MORE THAN TWO WORDS from the passage for each answer.\n\nWrite your answers in boxes 9-13 on your answer sheet.",
+              "questions": [
+                {
+                  "question_id": "4cf373cf-8b6b-41f1-8739-dfca382dda8b",
+                  "number": "9",
+                  "text": "Only a small fraction of people have imagination as_______________ as Lauren does.",
+                  "type": "short_answer",
+                  "answer": "Vibrant"
+                },
+                {
+                  "question_id": "8f44b7d2-f3ba-404b-9126-3268283dcde4",
+                  "number": "10",
+                  "text": " Hyperphantasia is______________to aphantasia.",
+                  "type": "short_answer",
+                  "answer": "Polar-opposite"
+                },
+                {
+                  "question_id": "72055092-368c-4cc3-a601-8ac384982ab9",
+                  "number": "11",
+                  "text": "There are a lot of subjectivity in comparing people's imagination - somebody's vivid scene could be another person's ____________________  .",
+                  "type": "short_answer",
+                  "answer": "Grainy picture"
+                },
+                {
+                  "question_id": "ac792f1e-30c9-46e4-9342-7109bd5ea458",
+                  "number": "12",
+                  "text": "Prof Zeman is________________________that aphantasia is not an illness.",
+                  "type": "short_answer",
+                  "answer": "Adamant"
+                },
+                {
+                  "question_id": "21ab6672-a454-42a6-b9f2-9e5b27faaeb4",
+                  "number": "13",
+                  "text": "Many people spend their lives with ______________________  somewhere in the mind's eye.",
+                  "type": "short_answer",
+                  "answer": "Imagery hovering"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

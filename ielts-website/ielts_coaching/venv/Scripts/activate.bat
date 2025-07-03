@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=C:\Ielts Website 1.0\ielts_coaching\venv
+set VIRTUAL_ENV=C:\Main IELTS\24-05-2025\ielts-website\ielts_coaching\venv
 
 if not defined PROMPT set PROMPT=$P$G
 

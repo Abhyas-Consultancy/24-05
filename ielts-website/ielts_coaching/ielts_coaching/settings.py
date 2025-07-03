@@ -142,9 +142,9 @@
 
 import os
 from pathlib import Path
-# from dotenv import load_dotenv
+from dotenv import load_dotenv
 
-# load_dotenv()
+load_dotenv()
 # Build paths inside the project
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -221,8 +221,13 @@ CORS_ALLOWED_ORIGINS = [
     "https://24-05-qyrn.vercel.app",  # Add your Vercel domain
     "http://localhost:3000",  # For local development
     "http://localhost:5173",
+    'http://127.0.0.1:3000',
+    
 ]
-
+# backend/project/settings.py
+CSRF_COOKIE_HTTPONLY = False  # Allow JavaScript to read cookies if needed
+CSRF_COOKIE_SAMESITE = 'Lax'  # Or 'None' for cross-origin requests
+CSRF_COOKIE_SECURE = False  # Set to True in production with HTTPS
 # Database configuration
 DATABASES = {
     'default': {
@@ -234,7 +239,7 @@ DATABASES = {
         'PORT': os.environ.get("DB_PORT"),
     }
 }
-
+# CORS_ALLOW_ALL_ORIGINS = True
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -285,3 +290,5 @@ REST_FRAMEWORK = {
 
 # Custom user model
 AUTH_USER_MODEL = 'core.User'
+
+OPENAI_API_KEY="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"

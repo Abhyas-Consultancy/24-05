@@ -39,10 +39,10 @@ deactivate nondestructive
 if [ "$OSTYPE" = "cygwin" ] || [ "$OSTYPE" = "msys" ] ; then
     # transform D:\path\to\venv to /d/path/to/venv on MSYS
     # and to /cygdrive/d/path/to/venv on Cygwin
-    export VIRTUAL_ENV=$(cygpath "C:\Ielts Website 1.0\ielts_coaching\venv")
+    export VIRTUAL_ENV=$(cygpath "C:\Main IELTS\24-05-2025\ielts-website\ielts_coaching\venv")
 else
     # use the path as-is
-    export VIRTUAL_ENV="C:\Ielts Website 1.0\ielts_coaching\venv"
+    export VIRTUAL_ENV="C:\Main IELTS\24-05-2025\ielts-website\ielts_coaching\venv"
 fi
 
 _OLD_VIRTUAL_PATH="$PATH"

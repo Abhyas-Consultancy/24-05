@@ -1846,8 +1846,14 @@ function TeacherDashboard() {
               Create
             </button>
           </div>
+            <button
+              onClick={() => navigate('/teacher/create-assignment')}
+              className="w-full bg-brandRed text-white font-bold py-3 rounded-lg hover:bg-brandCream hover:text-brandRed transition duration-150 ease-in-out"
+            >
+              Create Assignment
+            </button>
         </section>
-
+                 
         {/* Create Course Bundle Section */}
         <section className="mb-12 bg-brandRed text-white p-6 rounded-lg">
           <h2 className="text-3xl font-bold mb-4">Create Course Bundle</h2>
@@ -1962,7 +1968,7 @@ function TeacherDashboard() {
                   </div>
                 ))}
               </div>        
-
+              
          {/* Delete Section */}
          <section className="mb-12">
            <h2 className="text-brandRed text-3xl font-bold mb-4">Delete Uploaded Content</h2>

@@ -229,7 +229,7 @@
 
 
 from rest_framework import serializers
-from .models import RecordedClass, StudyMaterial, MockAssignment, Submission, User, Course, StudentCourse, Module, ModuleBundle
+from .models import RecordedClass, StudyMaterial, MockAssignment, Submission, User, Course, StudentCourse, Module, ModuleBundle, Assignment,AssignmentSubmission
 from django.db import models
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -324,7 +324,7 @@ class CourseBundleSerializer(serializers.ModelSerializer):
         elif obj.content_type == 'study_material':
             return StudyMaterialSerializer(StudyMaterial.objects.get(id=obj.content_id)).data
         elif obj.content_type == 'assignment':
-            return MockAssignmentSerializer(MockAssignment.objects.get(id=obj.content_id)).data
+            return AssignmentSerializer(Assignment.objects.get(id=obj.content_id)).data
         return None
 
 
@@ -433,6 +433,45 @@ class CourseBundleSerializer(serializers.ModelSerializer):
 #         return instance
 
 
+# class ModuleBundleSerializer(serializers.ModelSerializer):
+#     content_title = serializers.SerializerMethodField()
+
+#     class Meta:
+#         model = ModuleBundle
+#         fields = ['id', 'module', 'content_type', 'content_id', 'description', 'sequence', 'content_title']
+
+#     def get_content_title(self, obj):
+#         if obj.content_type == 'video':
+#             video = RecordedClass.objects.filter(id=obj.content_id).first()
+#             # return video.title if video else ""
+#             return RecordedClassSerializer(video).data if video else None
+#         elif obj.content_type == 'study_material':
+#             material = StudyMaterial.objects.filter(id=obj.content_id).first()
+#             return material.title if material else ""
+#         elif obj.content_type == 'assignment':
+#             assignment = MockAssignment.objects.filter(id=obj.content_id).first()
+#             return assignment.title if assignment else ""
+#         return ""
+
+# class ModuleBundleSerializer(serializers.ModelSerializer):
+#     content_title = serializers.SerializerMethodField()
+
+#     class Meta:
+#         model = ModuleBundle
+#         fields = ['id', 'module', 'content_type', 'content_id', 'description', 'sequence', 'content_title']
+
+#     def get_content_title(self, obj):
+#         if obj.content_type == 'video':
+#             video = RecordedClass.objects.filter(id=obj.content_id).first()
+#             return video.title if video else ""
+#         elif obj.content_type == 'study_material':
+#             material = StudyMaterial.objects.filter(id=obj.content_id).first()
+#             return material.title if material else ""
+#         elif obj.content_type == 'assignment':
+#             assignment = Assignment.objects.filter(id=obj.content_id).first()  # Changed from MockAssignment to Assignment
+#             return assignment.title if assignment else ""
+#         return ""
+
 class ModuleBundleSerializer(serializers.ModelSerializer):
     content_title = serializers.SerializerMethodField()
 
@@ -443,17 +482,29 @@ class ModuleBundleSerializer(serializers.ModelSerializer):
     def get_content_title(self, obj):
         if obj.content_type == 'video':
             video = RecordedClass.objects.filter(id=obj.content_id).first()
-            # return video.title if video else ""
-            return RecordedClassSerializer(video).data if video else None
+            if video:
+                return {
+                    'id': video.id,
+                    'title': video.title,
+                    'skill': video.skill,
+                    'video_file': video.video_file.url if video.video_file else ''
+                }
+            return ""
         elif obj.content_type == 'study_material':
             material = StudyMaterial.objects.filter(id=obj.content_id).first()
-            return material.title if material else ""
+            if material:
+                return {
+                    'id': material.id,
+                    'title': material.title,
+                    'skill': material.skill,
+                    'file': material.file.url if material.file else ''
+                }
+            return ""
         elif obj.content_type == 'assignment':
-            assignment = MockAssignment.objects.filter(id=obj.content_id).first()
+            assignment = Assignment.objects.filter(id=obj.content_id).first()
             return assignment.title if assignment else ""
         return ""
-
-
+    
 class ModuleSerializer(serializers.ModelSerializer):
     bundles = ModuleBundleSerializer(many=True, read_only=True)
 
@@ -463,3 +514,145 @@ class ModuleSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         return Module.objects.create(**validated_data)
+
+# class AssignmentSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Assignment
+#         fields = ['id','test_id', 'title', 'json_content', 'created_at', 'updated_at']
+
+
+
+# class AssignmentSubmissionSerializer(serializers.ModelSerializer):
+#     answers = serializers.JSONField()
+
+#     class Meta:
+#         model = AssignmentSubmission
+#         fields = ['id', 'assignment', 'student', 'answers', 'score', 'ai_analysis', 'submitted_at']
+#         read_only_fields = ['id', 'student', 'score', 'ai_analysis', 'submitted_at']
+
+#     def validate(self, data):
+#         # Ensure assignment exists
+#         assignment_id = self.context['view'].kwargs.get('pk')
+#         try:
+#             assignment = Assignment.objects.get(id=assignment_id)
+#         except Assignment.DoesNotExist:
+#             raise serializers.ValidationError({'assignment': 'Assignment not found'})
+
+#         # Validate answers against json_content
+#         answers = data.get('answers', {})
+#         if not isinstance(answers, dict) or not answers:
+#             raise serializers.ValidationError({'answers': 'Answers must be a non-empty JSON object'})
+
+#         valid_keys = []
+#         for section in assignment.json_content:
+#             for task in section['tasks']:
+#                 if task['type'] in ['essay', 'speaking']:
+#                     valid_keys.append(f"{section['section_id']}_{task['task_id']}")
+
+#         invalid_keys = [key for key in answers.keys() if key not in valid_keys]
+#         if invalid_keys:
+#             raise serializers.ValidationError({'answers': f'Invalid task keys: {invalid_keys}'})
+
+#         # Ensure student is the authenticated user and has 'student' role
+#         student = self.context['request'].user
+#         if student.is_anonymous or student.role != 'student':
+#             raise serializers.ValidationError({'student': 'Only students can submit assignments'})
+
+#         data['assignment'] = assignment
+#         data['student'] = student
+#         return data
+
+from rest_framework import serializers
+from .models import Assignment, AssignmentSubmission, Module, ModuleBundle, RecordedClass, StudyMaterial
+from django.contrib.auth import get_user_model
+import json
+
+User = get_user_model()
+
+class AssignmentSerializer(serializers.ModelSerializer):
+    json_content = serializers.JSONField()  # Ensure JSONField for serialization/deserialization
+
+    class Meta:
+        model = Assignment
+        fields = ['id', 'test_id', 'title', 'json_content']
+
+    def to_representation(self, instance):
+        # Parse json_content if it's a string
+        ret = super().to_representation(instance)
+        if isinstance(ret['json_content'], str):
+            try:
+                ret['json_content'] = json.loads(ret['json_content'])
+            except json.JSONDecodeError:
+                raise serializers.ValidationError({'json_content': 'Invalid JSON format'})
+        return ret
+
+    def to_internal_value(self, data):
+        # Ensure json_content is parsed if provided as a string
+        ret = super().to_internal_value(data)
+        if isinstance(data.get('json_content'), str):
+            try:
+                ret['json_content'] = json.loads(data['json_content'])
+            except json.JSONDecodeError:
+                raise serializers.ValidationError({'json_content': 'Invalid JSON format'})
+        return ret
+
+
+class AssignmentSubmissionSerializer(serializers.ModelSerializer):
+    answers = serializers.JSONField()
+
+    class Meta:
+        model = AssignmentSubmission
+        fields = ['id', 'assignment', 'student', 'answers', 'score', 'ai_analysis', 'submitted_at']
+        read_only_fields = ['id', 'student', 'score', 'ai_analysis', 'submitted_at']
+
+    def validate(self, data):
+        assignment_id = self.context['view'].kwargs.get('pk')
+        try:
+            assignment = Assignment.objects.get(id=assignment_id)
+        except Assignment.DoesNotExist:
+            raise serializers.ValidationError({'assignment': 'Assignment not found'})
+
+        answers = data.get('answers', {})
+        if not isinstance(answers, dict) or not answers:
+            raise serializers.ValidationError({'answers': 'Answers must be a non-empty JSON object'})
+
+        # Parse json_content if it's a string
+        json_content = assignment.json_content
+        if isinstance(json_content, str):
+            try:
+                json_content = json.loads(json_content)
+            except json.JSONDecodeError:
+                raise serializers.ValidationError({'assignment': 'Invalid JSON content in assignment'})
+
+        valid_keys = []
+        for section in json_content.get('sections', []):
+            for task in section.get('tasks', []):
+                if task.get('type') == 'task':
+                    if section.get('name') == 'SPEAKING' and task.get('answer') is not None:
+                        valid_keys.append(f"{section['section_id']}_{task['id']}")
+                    elif task.get('questions'):
+                        for questionSet in task['questions']:
+                            for question in questionSet.get('questions', []):
+                                if question.get('type') in ['short_answer', 'essay', 'multiple_choice', 'true_false_not_given', 'table']:
+                                    valid_keys.append(f"{section['section_id']}_{task['id']}_{question['question_id']}")
+
+        invalid_keys = [key for key in answers.keys() if key not in valid_keys]
+        if invalid_keys:
+            raise serializers.ValidationError({'answers': f'Invalid task keys: {invalid_keys}'})
+
+        student = self.context['request'].user
+        if student.is_anonymous or student.role != 'student':
+            raise serializers.ValidationError({'student': 'Only students can submit assignments'})
+
+        data['assignment'] = assignment
+        data['student'] = student
+        return data
+    
+class EvaluationSerializer(serializers.Serializer):
+    results = serializers.ListField(
+        child=serializers.DictField(
+            child=serializers.CharField(allow_null=True, required=False)
+        )
+    )
+    analytics = serializers.DictField()
+    overall_feedback = serializers.CharField()

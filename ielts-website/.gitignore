@@ -9,7 +9,7 @@ __pycache__/
 env/
 venv/
 *.env
-
+recorded_classes/
 # System files
 .DS_Store
 Thumbs.db

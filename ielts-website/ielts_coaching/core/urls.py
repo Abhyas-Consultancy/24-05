@@ -111,13 +111,14 @@
 
 # ]
 from django.urls import path, include
+from . import views
 from rest_framework.routers import DefaultRouter
 from .views import (
     RegisterView, LoginView, UserList, CourseViewSet, RecordedClassViewSet,
     StudyMaterialViewSet, MockAssignmentViewSet, SubmissionListCreate,
     SubmissionList, AssignCourseToStudent,CreateCourseBundle,StudentMockAssignmentList,EvaluateSubmission,StudentCourseListView,CourseRoadmapView,SkillContentView
     ,CourseBundleListCreateView,CourseBundleDetailView,UnlockNextModuleView,ModuleListCreateAPIView,ModuleRetrieveUpdateDestroyAPIView
-    ,BundleListCreateAPIView,BundleRetrieveUpdateDestroyAPIView
+    ,BundleListCreateAPIView,BundleRetrieveUpdateDestroyAPIView,AssignmentListCreateView,AssignmentDetailView, FileUploadView,AssignmentSubmissionView, AIEvaluationView, AnalyticsView
 )
 
 router = DefaultRouter()
@@ -164,5 +165,19 @@ urlpatterns = [
     # Bundle routes inside module
     path('modules/<int:module_id>/bundles/', BundleListCreateAPIView.as_view(), name='bundle-list-create'),
     path('bundles/<int:pk>/', BundleRetrieveUpdateDestroyAPIView.as_view(), name='bundle-detail'),
+
+    path('api/assignments/', AssignmentListCreateView.as_view(), name='assignment-list-create'),
+    path('api/assignments/<int:pk>/', AssignmentDetailView.as_view(), name='assignment-detail'),
+    path('api/upload-audio/', FileUploadView.as_view(), name='upload-audio'),
+    path('api/upload-image/', FileUploadView.as_view(), name='upload-image'),
+    
+    path('api/assignments/<int:pk>/submit/', AssignmentSubmissionView.as_view(), name='assignment-submit'),
+    path('api/assignments/<int:pk>/ai-evaluate/', AIEvaluationView.as_view(), name='ai-evaluate'),
+    path('evaluations/<int:pk>', AIEvaluationView.as_view(), name='evaluation'),
+    path('api/analytics/<int:student_id>/', AnalyticsView.as_view(), name='analytics'),
+    path('assignments/<int:pk>/reset/', views.reset_assignment_submission, name='reset-assignment'),
+
+
+
 ]
 
