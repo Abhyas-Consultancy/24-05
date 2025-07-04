@@ -218,7 +218,7 @@ WSGI_APPLICATION = 'ielts_coaching.wsgi.application'
 
 
 CORS_ALLOWED_ORIGINS = [
-    "https://24-05-qyrn.vercel.app",  # Add your Vercel domain
+    "https://rhymeroyal.vercel.app",  # Add your Vercel domain
     "http://localhost:3000",  # For local development
     "http://localhost:5173",
     'http://127.0.0.1:3000',
@@ -292,4 +292,6 @@ REST_FRAMEWORK = {
 AUTH_USER_MODEL = 'core.User'
 
 
-OPENAI_API_KEY=os.environ.get("AI_Key")
+# OPENAI_API_KEY=os.environ.get("AI_Key")
+
+OPENAI_API_KEY="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"
