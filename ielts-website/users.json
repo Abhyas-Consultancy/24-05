@@ -1,0 +1,9 @@
+{
+    "token": "18cc0e4602d148945a7abe083d6e84bc307d991b",
+    "user": {
+        "id": 1,
+        "username": "teacher1",
+        "email": "teacher1@example.com",
+        "role": "teacher"
+    }
+}
