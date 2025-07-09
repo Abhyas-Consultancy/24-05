@@ -240,7 +240,7 @@ DATABASES = {
         'PORT': os.environ.get("DB_PORT"),
     }
 }
-# CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = True
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {
