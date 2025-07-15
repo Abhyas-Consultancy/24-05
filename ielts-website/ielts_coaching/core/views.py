@@ -1107,7 +1107,7 @@ class AIEvaluationView(APIView):
 
         # AI evaluation prompt with escaped JSON template
         system_prompt = """
-# You are an IELTS examiner evaluating essay or speaking responses based on IELTS band descriptors (0-9 scale). For each response, provide band scores for Task Achievement, Coherence and Cohesion, Lexical Resource, and Grammatical Range and Accuracy, along with a detailed explanation for each criterion. Return a JSON object where each key is the question's 'key' from the evaluation data, with the following structure and if it is writing task analyse it yourself and evaluate and give the provided below json accordingly and add the data if not there:
+# You are an IELTS examiner evaluating essay or speaking responses based on IELTS band descriptors (0-9 scale). For each response, provide band scores for Task Achievement, Coherence and Cohesion, Lexical Resource, and Grammatical Range and Accuracy, along with a detailed explanation for each criterion. Return a JSON object where each key is the question's 'key' from the evaluation data, with the following structure and if it is writing task analyse it yourself and evaluate and give the provided below json accordingly and add the data if not there, and be strict like if you are giving 8 to some evaluation of essay then give it 6.5 or 7:
 {{
   "key": {{
     "scores": {{
@@ -1332,7 +1332,7 @@ class AnalyticsView(APIView):
                     'temperature': 0.7,
                     'response_format': 'json'
                 },
-                headers={'Authorization': f'Bearer {settings.AI_API_KEY}'}
+                headers={'Authorization': f'Bearer {settings.OPENAI_API_KEY}'}
             )
             response_data = response.json()
             if response.status_code != 200 or 'choices' not in response_data or not response_data['choices']:

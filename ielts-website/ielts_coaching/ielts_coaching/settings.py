@@ -165,6 +165,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'corsheaders',
     'core',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -216,7 +217,7 @@ WSGI_APPLICATION = 'ielts_coaching.wsgi.application'
 #     }
 # }
 
-
+# CORS_ALLOWED_ORIGINS=['*']
 CORS_ALLOWED_ORIGINS = [
     "https://rhymeroyal.vercel.app",  # Add your Vercel domain
     "http://localhost:3000",  # For local development
@@ -263,14 +264,14 @@ TIME_ZONE = 'Asia/Kolkata'
 USE_I18N = True
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
+# # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
 # Media files (for uploads)
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
@@ -293,4 +294,30 @@ REST_FRAMEWORK = {
 AUTH_USER_MODEL = 'core.User'
 
 
-OPENAI_API_KEY=os.environ.get("AI_Key")
+# OPENAI_API_KEY=os.environ.get("AI_Key")
+
+
+
+# from azure.identity import DefaultAzureCredential
+
+STORAGES = {
+    "default": {
+        "BACKEND": "storages.backends.azure_storage.AzureStorage",
+        "OPTIONS": {
+            "account_name": "abhyasieltsstorage",  # your storage account name
+            "account_key": os.environ.get("Azure_MediaBlob_Key"),  # get from Azure portal -> Access keys
+            "azure_container": "media",  # must be created manually
+            "overwrite_files": False,
+            "expiration_secs": None,  # never expire URLs (public access must be ON for this to work)
+        },
+    },
+    "staticfiles": {
+        "BACKEND": "storages.backends.azure_storage.AzureStorage",
+        "OPTIONS": {
+            "account_name": "abhyasieltsstorage",
+            "account_key": os.environ.get("Azure_MediaBlob_Key"),
+            "azure_container": "static",  # Optional: create a separate container for static files
+            "overwrite_files": True,
+        },
+    },
+}

@@ -584,7 +584,7 @@ const CourseRoadmap = () => {
                           preload="metadata"
                           className="rounded-lg w-full"
                         >
-                          <source src={`${API_BASE_URL}${bundle.content_title.video_file}`} type="video/mp4" />
+                          <source src={`${bundle.content_title.video_file}`} type="video/mp4" />
                           Your browser does not support the video tag.
                         </video>
                       ) : bundle.content_type === 'video' ? (
