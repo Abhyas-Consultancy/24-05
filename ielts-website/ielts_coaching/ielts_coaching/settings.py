@@ -226,6 +226,20 @@ CORS_ALLOWED_ORIGINS = [
     'https://2644baf7b187.ngrok-free.app'
     
 ]
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOW_HEADERS = [
+    "accept",
+    "accept-encoding",
+    "authorization",
+    "content-type",
+    "dnt",
+    "origin",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+]
+
 # backend/project/settings.py
 CSRF_COOKIE_HTTPONLY = False  # Allow JavaScript to read cookies if needed
 CSRF_COOKIE_SAMESITE = 'Lax'  # Or 'None' for cross-origin requests
