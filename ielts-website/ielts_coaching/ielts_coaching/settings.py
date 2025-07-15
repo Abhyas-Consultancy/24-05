@@ -237,7 +237,7 @@ DATABASES = {
         'NAME': os.environ.get("DB_NAME"),
         'USER': os.environ.get("DB_USER"),
         'PASSWORD': os.environ.get("DB_PASSWORD"),
-        'HOST': os.environ.get("DB_HOST"),
+        'HOST': "dpg-d1r29f3uibrs73f2dgg0-a.oregon-postgres.render.com",
         'PORT': os.environ.get("DB_PORT"),
     }
 }
@@ -294,7 +294,7 @@ REST_FRAMEWORK = {
 AUTH_USER_MODEL = 'core.User'
 
 
-# OPENAI_API_KEY=os.environ.get("AI_Key")
+OPENAI_API_KEY=os.environ.get("AI_Key")
 
 
 
