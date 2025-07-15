@@ -295,8 +295,7 @@ AUTH_USER_MODEL = 'core.User'
 
 
 OPENAI_API_KEY=os.environ.get("AI_Key")
-
-
+# check1
 
 # from azure.identity import DefaultAzureCredential
 
